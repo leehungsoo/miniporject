@@ -14,4 +14,9 @@ public class MemberDTO {
   private String memberJoinDate;
   private int memberLevel;
   private int memberStatus;
+
+//  추형호 -----
+  public String getRole(){
+    return memberLevel == 99 ? "ADMIN":"USER";
+  }
 }

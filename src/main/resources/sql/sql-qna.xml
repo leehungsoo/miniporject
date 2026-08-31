@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitc.aws402.miniproject.mapper.QnaMapper">
+    <select id="selectQnaList" resultType="QnaDTO">
+        SELECT
+        id AS id,
+        title,
+        writer,
+        created_at AS createdAt,
+        cnt,
+        answer_status AS answerStatus
+        FROM qna
+        ORDER BY id DESC
+    </select>
+
+    <!-- Q&A 글 등록 -->
+    <insert id="insertQna" parameterType="QnaDTO">
+        INSERT INTO qna (title, content, writer, created_at, cnt, answer_status, replied)
+        VALUES (#{title}, #{content}, #{writer}, NOW(), 0, '답변대기', 'N')
+    </insert>
+
+    <!-- Q&A 상세 조회 -->
+    <select id="selectQnaDetail" parameterType="int" resultType="QnaDTO">
+        SELECT
+        id,
+        title,
+        writer,
+        content,
+        created_at AS createdAt,
+        answer,
+        answer_date AS answerDate,
+        answer_status AS answerStatus,
+        reply,
+        reply_created_at AS replyCreatedAt,
+        replied,
+        cnt
+        FROM qna
+        WHERE id = #{id}
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateHitCount" parameterType="int">
+        UPDATE qna SET cnt = cnt + 1 WHERE id = #{qnaIdx}
+    </update>
+
+    <!-- Q&A 수정 -->
+    <update id="updateQna" parameterType="QnaDTO">
+        UPDATE qna
+        SET title = #{title},
+        content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Q&A 삭제 -->
+    <delete id="deleteQna" parameterType="int">
+        DELETE FROM qna WHERE id = #{qnaIdx}
+    </delete>
+
+    <!-- 관리자 답변 등록 -->
+    <update id="insertQnaAnswer" parameterType="QnaDTO">
+        UPDATE qna
+        SET answer = #{answer},
+        answer_date = NOW(),
+        answer_status = '답변완료',
+        reply = #{answer},
+        reply_created_at = NOW(),
+        replied = 'Y'
+        WHERE id = #{id}
+    </update>
+</mapper>

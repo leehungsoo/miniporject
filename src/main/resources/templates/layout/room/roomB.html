@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>숙소 상세 정보(카라반)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6ebf1d8a10bd22076493945b2c3d1bdd&autoload=false"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carouselEl = document.getElementById('roomCarousel');
+            const currentSlideEl = document.getElementById('currentSlide');
+            const totalSlidesEl = document.getElementById('totalSlides');
+            const thumbnails = document.querySelectorAll('.thumb-item');
+
+            if (totalSlidesEl) totalSlidesEl.textContent = thumbnails.length;
+
+            if (carouselEl) {
+                carouselEl.addEventListener('slide.bs.carousel', function (e) {
+                    updateThumbnails(e.to);
+                });
+
+                thumbnails.forEach((thumb, idx) => {
+                    thumb.addEventListener('click', function () {
+                        updateThumbnails(idx);
+                    });
+                });
+            }
+
+            function updateThumbnails(activeIndex) {
+                if (currentSlideEl) currentSlideEl.textContent = activeIndex + 1;
+                thumbnails.forEach((thumb, idx) => {
+                    if (idx === activeIndex) {
+                        thumb.classList.add('border-dark', 'border-2', 'active');
+                        thumb.classList.remove('opacity-75');
+                    } else {
+                        thumb.classList.remove('border-dark', 'border-2', 'active');
+                        thumb.classList.add('opacity-75');
+                    }
+                });
+            }
+
+            kakao.maps.load(function() {
+                var mapContainer = document.getElementById('map');
+                var coords = new kakao.maps.LatLng(38.0237965, 128.7201341);
+                var mapOption = {
+                    center: coords
+                };
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+                var marker = new kakao.maps.Marker({
+                    position: coords
+                });
+                marker.setMap(map);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+<header>
+    <div th:replace="~{layout/header :: subHeader('subroom.png')}"></div>
+</header>
+
+<main>
+    <section class="container my-5" style="max-width: 1000px;">
+        <div class="row gx-4">
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                    <div class="text-white text-center py-3 fw-bold fs-6" style="background-color: green">
+                        객실 안내
+                    </div>
+                    <div class="list-group list-group-flush border border-top-0 border-secondary-subtle small">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#mapModal" class="list-group-item list-group-item-action py-2.5 text-center text-secondary border-bottom rounded-0">배치도</a>
+                        <a th:href="@{/RoomList/roomB(id=2)}" class="list-group-item list-group-item-action py-2.5 text-center text-dark fw-bold border-bottom rounded-0">카라반</a>
+                        <a th:href="@{/RoomList/roomA(id=1)}" class="list-group-item list-group-item-action py-2.5 text-center text-secondary border-bottom rounded-0">글램핑</a>
+                        <a th:href="@{/RoomList/roomC(id=3)}" class="list-group-item list-group-item-action py-2.5 text-center text-secondary rounded-0">오토캠핑장</a>
+                    </div>
+                </div>
+            <div class="col-lg-9">
+
+                <div class="modal fade" id="mapModal" tabindex="0" aria-labelledby="mapModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold" id="mapModalLabel">카라반 캠핑장 배치도</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img th:src="@{/images/cmap.png}" src="/images/cmap.png" alt="캠핑장 배치도" class="img-fluid rounded">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-3">
+                    <h3 class="fw-bold tracking-wide text-dark mb-1">카라반</h3>
+                    <p class="text-secondary small mb-0" style="font-size: 0.85rem;">객실정보를 꼼꼼히 체크 후 예약해주세요.</p>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <div class="border-top border-secondary flex-grow-1" style="max-width: 120px;"></div>
+                    <div class="border border-secondary rounded-circle mx-2" style="width: 6px; height: 6px;"></div>
+                    <div class="border-top border-secondary flex-grow-1" style="max-width: 120px;"></div>
+                </div>
+
+                <div id="roomCarousel" class="carousel slide position-relative mb-2" data-bs-ride="false">
+                    <div class="carousel-inner rounded-1">
+                        <div class="carousel-item active">
+                            <img th:src="@{/images/Caravan.png}" src="/images/Caravan.png" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="객실 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{/images/Caravan2.png}" src="/images/Caravan2.png" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="객실 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{/images/Caravan3.png}" src="/images/Caravan3.png" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="객실 3">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{/images/Caravan4.png}" src="/images/Caravan4.png" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="객실 4">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{/images/Caravan5.png}" src="/images/Caravan5.png" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="객실 5">
+                        </div>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon opacity-75" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#roomCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon opacity-75" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
+                    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-2 bg-dark bg-opacity-75 text-white px-2.5 py-0.5 rounded-pill small z-3" style="font-size: 0.75rem;">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">5</span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
+                    <button class="btn btn-sm btn-light border-0 text-muted" type="button" data-bs-target="#roomCarousel" data-bs-slide="prev">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <div class="d-flex gap-1.5" id="thumbnailContainer">
+                        <img th:src="@{/images/Caravan.png}" src="/images/Caravan.png" class="img-thumbnail thumb-item p-0 border-2 border-dark active" style="width: 65px; height: 45px; object-fit: cover; cursor: pointer;" data-bs-target="#roomCarousel" data-bs-slide-to="0">
+                        <img th:src="@{/images/Caravan2.png}" src="/images/Caravan2.png" class="img-thumbnail thumb-item p-0 border-1 opacity-75" style="width: 65px; height: 45px; object-fit: cover; cursor: pointer;" data-bs-target="#roomCarousel" data-bs-slide-to="1">
+                        <img th:src="@{/images/Caravan3.png}" src="/images/Caravan3.png" class="img-thumbnail thumb-item p-0 border-1 opacity-75" style="width: 65px; height: 45px; object-fit: cover; cursor: pointer;" data-bs-target="#roomCarousel" data-bs-slide-to="2">
+                        <img th:src="@{/images/Caravan4.png}" src="/images/Caravan4.png" class="img-thumbnail thumb-item p-0 border-1 opacity-75" style="width: 65px; height: 45px; object-fit: cover; cursor: pointer;" data-bs-target="#roomCarousel" data-bs-slide-to="3">
+                        <img th:src="@{/images/Caravan5.png}" src="/images/Caravan5.png" class="img-thumbnail thumb-item p-0 border-1 opacity-75" style="width: 65px; height: 45px; object-fit: cover; cursor: pointer;" data-bs-target="#roomCarousel" data-bs-slide-to="4">
+                    </div>
+                    <button class="btn btn-sm btn-light border-0 text-muted" type="button" data-bs-target="#roomCarousel" data-bs-slide="next">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+
+
+                <div class="mb-4 text-center">
+                    <h4 class="fw-bold text-dark mb-1">ROOM INFO</h4>
+                    <p class="text-secondary small mb-3" style="font-size: 0.85rem;">객실 정보를 확인해주세요.</p>
+
+                    <div class="lh-base mb-3 text-secondary text-start px-2 small">
+                        <ul class="list-unstyled p-0 m-0">
+                            <li class="mb-1"><strong class="text-dark">• 크기 :</strong> <span th:text="${room.roomSize}">14㎡(구4평)</span></li>
+                            <li class="mb-1"><strong class="text-dark">• 구조 :</strong> <span th:text="${room.roomName}">카라반</span></li>
+                            <li class="mb-1"><strong class="text-dark">• 인원 :</strong> 기준 <span th:text="${room.roomBasicPerson}">4</span>명 / 최대 <span th:text="${room.roomMaxPerson}">4</span>명</li>
+                            <li class="mb-1"><strong class="text-dark">• 초과인원비용 :</strong> 추가인원당(침구류포함) 40,000원</li>
+                        </ul>
+                    </div>
+
+                    <div class="text-end text-muted small mb-1" style="font-size: 0.75rem;">* 2026년 기준</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center align-middle mb-0" style="font-size: 0.8rem;">
+                            <thead>
+                            <tr class="table-light text-secondary">
+                                <th colspan="2" class="py-2 fw-bold">비수기</th>
+                                <th colspan="2" class="py-2 fw-bold">준성수기</th>
+                                <th colspan="2" class="py-2 fw-bold">성수기</th>
+                            </tr>
+                            <tr class="table-light text-secondary" style="font-size: 0.75rem;">
+                                <th>주말요금</th>
+                                <th>주중요금</th>
+                                <th>주말요금</th>
+                                <th>주중요금</th>
+                                <th>주말요금</th>
+                                <th>주중요금</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-secondary">
+                            <tr>
+                                <td class="py-2" th:text="${#numbers.formatInteger(room.roomPriceWeekend, 3, 'COMMA') + '원'}">100,000원</td>
+                                <td class="py-2" th:text="${#numbers.formatInteger(room.roomPriceWeekdays, 3, 'COMMA') + '원'}">100,000원</td>
+                                <td class="py-2" th:text="${#numbers.formatInteger(room.roomPriceShoulderWeekend, 3, 'COMMA') + '원'}">120,000원</td>
+                                <td class="py-2" th:text="${#numbers.formatInteger(room.roomPriceShoulderWeekdays, 3, 'COMMA') + '원'}">120,000원</td>
+                                <td class="py-2" th:text="${#numbers.formatInteger(room.roomPricePeakWeekend, 3, 'COMMA') + '원'}">150,000원</td>
+                                <td class="py-2" th:text="${#numbers.formatInteger(room.roomPricePeakWeekdays, 3, 'COMMA') + '원'}">150,000원</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <br>
+                <hr class="border-secondary opacity-25 my-4">
+                <br>
+
+                <div class="mb-4 text-center">
+                    <h4 class="fw-bold text-dark mb-1">AMENITIES</h4>
+                    <p class="text-secondary small mb-3" style="font-size: 0.85rem;">객실 내 구비시설 및 편의서비스를 안내합니다.</p>
+                    <div class="row row-cols-2 row-cols-md-4 g-2 text-center text-secondary">
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-wind fs-5 d-block mb-1"></i>공기청정기</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-tv fs-5 d-block mb-1"></i>TV</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-snow fs-5 d-block mb-1"></i>냉난방기</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-box-seam fs-5 d-block mb-1"></i>냉장고</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-cup-hot fs-5 d-block mb-1"></i>전자렌지 / 밥솥</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-egg-fried fs-5 d-block mb-1"></i>식기류 일체</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-moon-stars fs-5 d-block mb-1"></i>침구류</div></div>
+                        <div class="col"><div class="p-2 border rounded bg-light"><i class="bi bi-wifi fs-5 d-block mb-1"></i>무선 와이파이</div></div>
+                    </div>
+                    <p class="text-muted mt-2 text-end" style="font-size: 0.75rem;">* 기본 세면도구(칫솔, 샴푸, 수건 등)는 개인 지참 필요합니다.</p>
+                </div>
+
+                <div class="my-5 pt-4">
+                    <div class="text-center mb-3">
+                        <h2 class="fw-bold tracking-wide display-6 text-dark mb-2">LOCATION</h2>
+                        <p class="text-secondary small mb-0">오시는 길 및 위치 정보를 확인하세요.</p>
+                    </div>
+                    <hr class="border-dark opacity-100 my-4">
+
+                    <div id="map" class="border rounded overflow-hidden shadow-sm mb-3" style="width: 100%; height: 380px;"></div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 text-secondary small px-1">
+                        <div>
+                            <i class="bi bi-geo-alt-fill text-dark me-1"></i>
+                            <strong class="text-dark">주소 :</strong> 강원도 양양군 현북면 하조대2길 48-69
+                        </div>
+                        <div>
+
+                            <a href="https://map.naver.com/v5/search/강원도%20양양%20풀라운지펜션" target="_blank"
+                                rel="noopener noreferrer" class="btn btn-outline-dark btn-sm rounded-1">
+                                <i class="bi bi-map me-1"></i> 네이버 지도로 길찾기
+                            </a>
+                            <a href="https://map.kakao.com/?q=강원도양양풀라운지펜션" target="_blank"
+                                rel="noopener noreferrer" class="btn btn-outline-dark btn-sm rounded-1">
+                                <i class="bi bi-signpost-2 me-1"></i> 카카오맵
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <br>
+                <hr class="border-secondary opacity-25 my-4">
+                <br>
+
+                <div class="mb-4">
+                    <div class="text-center mb-3">
+                        <h4 class="fw-bold text-dark mb-1">ATTENTION</h4>
+                        <p class="text-secondary small mb-0" style="font-size: 0.85rem;">객실 이용안내를 확인해주세요.</p>
+                    </div>
+
+                    <div class="px-2 small text-secondary" style="line-height: 1.7;">
+                        <ul class="list-unstyled p-0 m-0">
+                            <li class="text-danger fw-bold">- 입실 시간: 오후 3시 이후(밤 10시 이후 입실 시 사전 연락 부탁드립니다.)</li>
+                            <li class="text-danger fw-bold">- 퇴실 시간: 오전 11시 이전 까지</li>
+                            <li class="text-danger fw-bold">- 입금 안내 : 예약 후 24시간 내 미입금시 자동취소됩니다.</li>
+                            <li class="text-secondary">- 현장 추가 요금 안내</li>
+                            <li class="text-muted ps-3">- 기준 인원 초과 시: 1인 40,000원 추가 (단, 최대인원 초과 시 입실이 불가능합니다.)</li>
+                            <li class="text-muted ps-3">- 바비큐 세트(숯+그릴+그릴망+토치) : 2인 기준 25,000원 (현장결제)</li>
+                            <li class="text-danger fw-bold ps-3">* 바비큐 이용 주의사항 : 숯 외의 장작 등 기타 자재 사용을 엄격히 금지합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <hr class="border-secondary opacity-25 my-4">
+                <br>
+
+                <div class="mb-4">
+                    <div class="text-center mb-3">
+                        <h4 class="fw-bold text-dark mb-1">REFUND POLICY</h4>
+                        <p class="text-secondary small mb-3" style="font-size: 0.85rem;">객실 환불정책을 확인해주세요.</p>
+                    </div>
+
+                    <div class="text-danger fw-bold lh-base mb-3 small text-center">
+                        <p class="mb-1">* 올바른 예약문화 정착을 위하여 당 캠핑장에서는 예약환불 기준을 아래와 같이 운영하고 있사오니</p>
+                        <p class="mb-0">반드시 확인하시고 예약해주시기 바랍니다.</p>
+                    </div>
+
+                    <div class="px-2 small text-secondary" style="line-height: 1.7;">
+                        <ul class="list-unstyled p-0 m-0">
+                            <li class="mb-1">- 입실일 7일전 취소 또는 <span class="text-danger fw-bold">예약일 변경시</span> : 요금의 10% 공제 후 환불 또는 <span class="text-danger fw-bold">10% 추가(현장결제)후</span> 예약일 변경</li>
+                            <li class="mb-1">- 입실일 6일전 취소 또는 <span class="text-danger fw-bold">예약일 변경시</span> : 요금의 20% 공제 후 환불 또는 <span class="text-danger fw-bold">20% 추가(현장결제)후</span> 예약일 변경</li>
+                            <li class="mb-1">- 입실일 5일전 취소 또는 <span class="text-danger fw-bold">예약일 변경시</span> : 요금의 30% 공제 후 환불 또는 <span class="text-danger fw-bold">30% 추가(현장결제)후</span> 예약일 변경</li>
+                            <li class="mb-1">- 입실일 4일전 취소 또는 <span class="text-danger fw-bold">예약일 변경시</span> : 요금의 50% 공제 후 환불 또는 <span class="text-danger fw-bold">50% 추가(현장결제)후</span> 예약일 변경</li>
+                            <li class="mb-1">- 입실일 3일전~입실 당일 취소 또는 <span class="text-danger fw-bold">예약일 변경시</span> : 환불불가 <span class="text-danger fw-bold">예약일변경불가</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="text-center mt-4 pt-2">
+                        <a th:href="@{/reservation}" href="/reservation" class="btn btn-secondary btn-md px-4 py-2 rounded-1 d-inline-flex align-items-center gap-2 shadow-sm" style="background-color: #444;">
+                            <i class="bi bi-pencil-square fs-5"></i>
+                            <div class="text-start lh-1">
+                                <span class="d-block text-uppercase text-white-50 mb-0.5" style="font-size: 0.65rem; letter-spacing: 0.5px;">RESERVATION</span>
+                                <span class="fw-bold fs-6 text-white">실시간예약</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+<!--    <div th:replace="~{layout/footer :: footer}"></div>-->
+</footer>
+</body>
+</html>
