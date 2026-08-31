@@ -1,6 +1,5 @@
 package bitc.aws402.miniproject.controller;
 
-import bitc.aws402.miniproject.dto.AccommodationDTO;
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -9,9 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 //  추형호 -----
 @RequestMapping("/admin")
