@@ -3,7 +3,6 @@ package bitc.aws402.miniproject.service;
 import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.mapper.QnaMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,31 +14,31 @@ public class QnaService {
 
     private final QnaMapper qnaMapper;
 
-    public List<QnaDTO> selectQnaList() throws Exception {
+    public List<QnaDTO> selectQnaList() {
         return qnaMapper.selectQnaList();
     }
 
-    public void insertQna(QnaDTO qna) throws Exception {
+    public void insertQna(QnaDTO qna)  {
         qnaMapper.insertQna(qna);
     }
 
-    public QnaDTO selectQnaDetail(int qnaIdx) throws Exception {
+    public QnaDTO selectQnaDetail(int qnaIdx) {
         return qnaMapper.selectQnaDetail(qnaIdx);
     }
 
-    public void updateHitCount(int qnaIdx) throws Exception {
+    public void updateHitCount(int qnaIdx) {
         qnaMapper.updateHitCount(qnaIdx);
     }
 
-    public void updateQna(QnaDTO qna) throws Exception {
+    public void updateQna(QnaDTO qna) {
         qnaMapper.updateQna(qna);
     }
 
-    public void deleteQna(int qnaIdx) throws Exception {
+    public void deleteQna(int qnaIdx) {
         qnaMapper.deleteQna(qnaIdx);
     }
 
-    public void insertQnaAnswer(QnaDTO qna) throws Exception {
+    public void insertQnaAnswer(QnaDTO qna) {
         qnaMapper.insertQnaAnswer(qna);
     }
 }

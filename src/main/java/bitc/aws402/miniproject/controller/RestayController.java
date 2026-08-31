@@ -3,7 +3,6 @@ package bitc.aws402.miniproject.controller;
 import bitc.aws402.miniproject.dto.RestayDTO;
 import bitc.aws402.miniproject.service.DetailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
