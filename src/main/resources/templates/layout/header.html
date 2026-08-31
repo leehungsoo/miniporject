@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- 1. 메인페이지 전용 헤더 -->
+<header th:fragment="mainHeader">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
+        <div class="container">
+            <!-- 로고 -->
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-success" th:href="@{/#}">
+                <i class="bi bi-tree-fill fs-2"></i> restay
+            </a>
+
+            <!-- 모바일용 햄버거 버튼 -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 메뉴 영역 -->
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/RoomIntro}">캠핑장 소개</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/Facilities}">부대시설</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/RoomList}">숙소 안내</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/reservation}">실시간 예약</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/qnaList}">고객센터</a></li>
+                </ul>
+
+                <!-- 우측 로그인/로그아웃 버튼 (세션 정보에 따라 1개만 출력) -->
+                <div class="d-flex">
+                    <!-- ① 비로그인 상태 (세션에 loginUser가 없음) -> 로그인 버튼만 출력 -->
+                    <a th:if="${session.loginUser == null}" th:href="@{/login.html}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
+
+                    <!-- ② 로그인 상태 (세션에 loginUser가 존재함) -> 로그아웃 버튼만 출력 -->
+                    <a th:if="${session.loginUser != null}" th:href="@{/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- 2. 서브페이지 전용 헤더 (메뉴 + 서브배너) -->
+<header th:fragment="subHeader(bannerImg)">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
+        <div class="container">
+            <!-- 로고 -->
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-success" th:href="@{/RoomIntro}">
+                <i class="bi bi-tree-fill fs-2"></i> restay
+            </a>
+
+            <!-- 모바일용 햄버거 버튼 -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#subNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 메뉴 영역 -->
+            <div class="collapse navbar-collapse" id="subNavbar">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/RoomIntro}">캠핑장 소개</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/Facilities}">부대시설</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/RoomList}">숙소 안내</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/reservation}">실시간 예약</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/qnaList}">고객센터</a></li>
+                </ul>
+
+                <!-- 우측 로그인/로그아웃 버튼 -->
+                <div class="d-flex">
+                    <!-- ① 비로그인 상태 -->
+                    <a th:if="${session.loginUser == null}" th:href="@{/login.html}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
+
+                    <!-- ② 로그인 상태 -->
+                    <a th:if="${session.loginUser != null}" th:href="@{/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 서브 배너 이미지 -->
+    <div class="sub-banner">
+        <img th:src="@{|/images/${bannerImg}|}" alt="서브 배너" class="w-100 img-fluid object-fit-cover" style="max-height: 300px;">
+    </div>
+</header>
+
+</body>
+</html>
