@@ -7,7 +7,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
         <div class="container">
             <!-- 로고 -->
-            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-success" th:href="@{/#}">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-success" th:href="@{/}">
                 <i class="bi bi-tree-fill fs-2"></i> restay
             </a>
 
@@ -29,10 +29,10 @@
                 <!-- 우측 로그인/로그아웃 버튼 (세션 정보에 따라 1개만 출력) -->
                 <div class="d-flex">
                     <!-- ① 비로그인 상태 (세션에 loginUser가 없음) -> 로그인 버튼만 출력 -->
-                    <a th:if="${session.loginUser == null}" th:href="@{/login.html}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
+                    <a th:if="${session.memberId == null}" th:href="@{/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
 
                     <!-- ② 로그인 상태 (세션에 loginUser가 존재함) -> 로그아웃 버튼만 출력 -->
-                    <a th:if="${session.loginUser != null}" th:href="@{/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
+                    <a th:if="${session.memberId != null}" th:href="@{/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
                 </div>
             </div>
         </div>
