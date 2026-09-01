@@ -16,10 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AdminController {
     private final MemberService memberService;
 
-    @GetMapping({"", "/", "/index"})
+    @GetMapping({"","/", "/index"})
     public String adminIndex() {
         // templates/admin/index.html 파일이 존재한다고 가정
-        return "admin/login";
+        return "/admin/login";
     }
 
     @GetMapping("/login")
@@ -72,12 +72,12 @@ public class AdminController {
 
     // 1. 관리자 메인 페이지 (회원 목록 및 Q&A 목록 조회)
 //    mybatis 로 변경 필요
-    @GetMapping("")
-    public String adminMain(Model model) {
+//    @GetMapping("")
+//    public String adminMain(Model model) {
 //        model.addAttribute("userList", userRepository.findAll());
 //        model.addAttribute("qnaList", qnaRepository.findAllByOrderByIdDesc());
-        return "admin/main";
-    }
+//        return "admin/main";
+//    }
 
     // 2. Q&A 상세보기
 //    mybatis 로 변경 필요

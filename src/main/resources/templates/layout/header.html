@@ -66,10 +66,10 @@
                 <!-- 우측 로그인/로그아웃 버튼 -->
                 <div class="d-flex">
                     <!-- ① 비로그인 상태 -->
-                    <a th:if="${session.loginUser == null}" th:href="@{/login.html}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
+                    <a th:if="${session.loginUser == null}" th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
 
                     <!-- ② 로그인 상태 -->
-                    <a th:if="${session.loginUser != null}" th:href="@{/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
+                    <a th:if="${session.loginUser != null}" th:href="@{/member/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
                 </div>
             </div>
         </div>
