@@ -12,20 +12,20 @@
           crossorigin="anonymous"></script>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; padding-bottom: 50px; }
-    .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    .card { background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .title { font-size: 20px; font-weight: 700; color: #2e7d32; border-bottom: 2px solid #2e7d32; padding-bottom: 10px; margin-bottom: 20px; }
-    .info-group { margin-bottom: 15px; font-size: 14px; }
-    .info-group label { font-weight: bold; color: #555; display: inline-block; width: 80px; }
-    .content-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 15px; border-radius: 4px; min-height: 120px; margin-top: 10px; font-size: 14px; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; padding-bottom: 50px; }
+      .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+      .card { background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+      .title { font-size: 20px; font-weight: 700; color: #2e7d32; border-bottom: 2px solid #2e7d32; padding-bottom: 10px; margin-bottom: 20px; }
+      .info-group { margin-bottom: 15px; font-size: 14px; }
+      .info-group label { font-weight: bold; color: #555; display: inline-block; width: 80px; }
+      .content-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 15px; border-radius: 4px; min-height: 120px; margin-top: 10px; font-size: 14px; }
 
-    .reply-form { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
-    textarea { width: 100%; height: 120px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; margin-top: 8px; resize: vertical; }
+      .reply-form { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+      textarea { width: 100%; height: 120px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; margin-top: 8px; resize: vertical; }
 
-    .btn-submit { background-color: #2e7d32; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-    .btn-submit:hover { background-color: #1b5e20; }
+      .btn-submit { background-color: #2e7d32; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+      .btn-submit:hover { background-color: #1b5e20; }
   </style>
 </head>
 <body>
@@ -44,15 +44,22 @@
       <div class="content-box" th:text="${qna.content}"></div>
     </div>
 
+    <!-- 이미 등록된 답변이 있는 경우 출력되는 영역 -->
+    <div class="info-group" th:if="${qna.answer != null and qna.answer != ''}">
+      <label>관리자 답변:</label>
+      <div class="content-box" style="background-color: #e8f5e9; color: #1b5e20;" th:text="${qna.answer}"></div>
+      <div style="font-size: 12px; color: #666; text-align: right; margin-top: 5px;"
+           th:text="${#temporals.format(qna.replyCreatedAt, 'yyyy-MM-dd HH:mm')}"></div>
+    </div>
+
     <!-- 관리자 답글 입력 폼 -->
     <form th:action="@{/admin/qna/reply/{id}(id=${qna.id})}" method="post" class="reply-form">
-      <h3>관리자 답글 입력</h3>
-      <textarea name="reply" placeholder="답변 내용을 입력하세요..." required th:text="${qna.reply}"></textarea>
+      <h3>관리자 답글 입력 / 수정</h3>
+      <textarea name="reply" placeholder="답변 내용을 입력하세요..." required></textarea>
 
       <div style="text-align: right; margin-top: 15px;">
-        <!-- 버튼 타입 명시 및 클릭 시 부드러운 전환 유도 -->
-        <button type="submit" class="btn-submit">답변 등록/수정</button>
-        <a th:href="@{/admin/dashboard}" class="btn" style="background-color: #6c757d; color: white; padding: 10px 20px; text-decoration-none; border-radius: 4px; display: inline-block; margin-left: 5px;">대시보드로 가기</a>
+        <button type="submit" class="btn-submit">답변 등록</button>
+        <a th:href="@{/admin/dashboard}" class="btn" style="background-color: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin-left: 5px;">대시보드로 가기</a>
       </div>
     </form>
   </div>

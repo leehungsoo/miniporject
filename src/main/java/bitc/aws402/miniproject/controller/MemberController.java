@@ -23,7 +23,7 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String signupProcess(@RequestBody MemberDTO member, RedirectAttributes redirectAttributes){
+    public String signupProcess(@ModelAttribute MemberDTO member, RedirectAttributes redirectAttributes){
         try {
             memberService.registerMember(member);
             redirectAttributes.addFlashAttribute("msg", "회원가입 성공하였습니다");
@@ -57,10 +57,11 @@ public class MemberController {
         }
 
         if (!member.getMemberPwd().equals(memberPwd)) {
-            redirectAttributes.addFlashAttribute("error", "아이디와 비번이 일치하지 않습니다");
+            redirectAttributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
             return "redirect:/member/login" + redirectParam;
         }
 
+        session.setAttribute("loginUser", member);
         session.setAttribute("memberIdx", member.getMemberIdx());
         session.setAttribute("memberId", member.getMemberId());
         session.setAttribute("memberName", member.getMemberName());
@@ -70,7 +71,7 @@ public class MemberController {
         session.setAttribute("memberJoinDate", member.getMemberJoinDate());
         session.setAttribute("memberLevel", member.getMemberLevel());
         session.setAttribute("memberStatus", member.getMemberStatus());
-        session.setMaxInactiveInterval(60*30);  //세션 유지 시간 30분        redirectAttributes.addFlashAttribute("msg", "로그인 성공하였습니다");
+        session.setMaxInactiveInterval(60 * 30);  //세션 유지 시간 30분        redirectAttributes.addFlashAttribute("msg", "로그인 성공하였습니다");
 
         if (redirectURL != null && !redirectURL.isEmpty()) {
             return "redirect:" + redirectURL;
@@ -80,15 +81,6 @@ public class MemberController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session, HttpServletRequest request) {
-        session.removeAttribute("memberIdx");
-        session.removeAttribute("memberId");
-        session.removeAttribute("memberName");
-        session.removeAttribute("memberPhone");
-        session.removeAttribute("memberGender");
-        session.removeAttribute("memberEmail");
-        session.removeAttribute("memberJoinDate");
-        session.removeAttribute("memberLevel");
-        session.removeAttribute("memberStatus");
         session.invalidate();
         String referer = request.getHeader("Referer");
         if (referer != null && !referer.isEmpty()) {
@@ -102,7 +94,7 @@ public class MemberController {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             redirectAttributes.addFlashAttribute("error", "로그인 후 이용해주세요.");
-            return "redirect:/member/login";
+            return "redirect:/member/login?redirectURL=/member/mypage";
         }
         MemberDTO userInfo = memberService.getUserInfo(loginUser.getMemberId());
         model.addAttribute("user", userInfo);

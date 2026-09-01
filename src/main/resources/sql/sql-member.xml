@@ -16,151 +16,93 @@
         member_email,
         member_level
         ) VALUES (
-        #{userId},
-        #{userPw},
-        #{userName},
-        #{gender},
-        #{phone},
-        #{email},
+        #{memberId},
+        #{memberPwd},
+        #{memberName},
+        #{memberGender},
+        #{memberPhone},
+        #{memberEmail},
         1              <!-- 기본 권한/레벨 설정 -->
         )
     </insert>
-
-    <!-- 로그인 및 아이디로 회원 정보 조회 -->
-    <select id="selectMemberList" resultType="MemberDTO">
-        SELECT
-        member_idx AS id,
-        member_id AS userId,
-        member_pwd AS userPw,
-        member_name AS userName,
-        member_gender AS gender,
-        member_phone AS phone,
-        member_email AS email,
-        member_level AS memberLevel
-        FROM tb_member
-        ORDER BY member_idx DESC
-    </select>
-
 
     <select id="selectMemberByUserId" parameterType="String" resultType="MemberDTO">
         SELECT
         member_idx,
         member_id,
         member_pwd,
-        member_phone.
+        member_phone,
         member_name,
         member_gender,
         member_phone,
         member_email,
         member_join_date,
         member_level,
-        member_status,
+        member_status
         FROM tb_member
         WHERE member_id = #{memberId}
     </select>
 
     <!-- [추가] 마이페이지 회원 정보 단건 조회 -->
-    <select id="selectUserInfo" parameterType="string" resultType="MemberDTO">
+    <select id="selectUserInfo" parameterType="String" resultType="MemberDTO">
         SELECT
-        member_idx AS id,
-        member_id AS userId,
-        member_pwd AS userPw,
-        member_name AS userName,
-        member_gender AS gender,
-        member_phone AS phone,
-        member_email AS email,
-        member_level AS memberLevel
+        member_idx,
+        member_id,
+        member_pwd,
+        member_name,
+        member_gender,
+        member_phone,
+        member_email,
+        member_join_date,
+        member_level,
+        member_status
         FROM tb_member
-        WHERE member_id = #{userId}
+        WHERE member_id = #{memberId}
     </select>
 
     <!-- [추가] 회원 정보 수정 -->
     <update id="updateUserInfo" parameterType="MemberDTO">
         UPDATE tb_member
         SET
-        <if test="userPw != null and userPw != ''">
-            member_pwd = #{userPw},
+        <if test="memberPwd != null and memberPwd != ''">
+            member_pwd = #{memberPwd},
         </if>
-        member_name = #{userName},
-        member_email = #{email},
-        member_phone = #{phone}
-        WHERE member_id = #{userId}
+        member_name = #{memberName},
+        member_email = #{memberEmail},
+        member_phone = #{memberPhone}
+        WHERE member_id = #{memberId}
     </update>
-
-    <!-- Q&A 목록 조회 -->
-    <select id="selectAllQna" resultType="QnaDTO">
-        SELECT
-        id,
-        title,
-        content,
-        writer,
-        answer,
-        DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') AS createdAt
-        FROM qna
-        ORDER BY id DESC
-    </select>
-
-    <!-- Q&A 상세 조회 -->
-    <select id="selectQnaById" parameterType="long" resultType="QnaDTO">
-        SELECT
-        id,
-        title,
-        content,
-        writer,
-        answer,
-        DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') AS createdAt
-        FROM qna
-        WHERE id = #{id}
-    </select>
-
-    <!-- Q&A 등록 -->
-    <insert id="insertQna" parameterType="QnaDTO">
-        INSERT INTO qna (title, content, writer)
-        VALUES (#{title}, #{content}, #{writer})
-    </insert>
-
-    <!-- Q&A 답변 등록 -->
-    <update id="updateQnaAnswer">
-        UPDATE qna SET answer = #{answer} WHERE id = #{id}
-    </update>
-
-    <!-- Q&A 글 수정 -->
-    <update id="updateQna" parameterType="QnaDTO">
-        UPDATE qna
-        SET
-        title = #{title},
-        content = #{content}
-        WHERE id = #{id}
-    </update>
-
-    <!-- Q&A 글 삭제 -->
-    <delete id="deleteQna" parameterType="int">
-        DELETE FROM qna
-        WHERE id = #{id}
-    </delete>
-
-    <!-- 숙소 및 예약 목록 조회 -->
-    <select id="selectAllAccommodations" resultType="AccommodationDTO">
-        SELECT *
-        FROM accommodation
-        ORDER BY id DESC
-    </select>
-
-    <select id="selectAllReservations" resultType="ReservationDTO">
-        SELECT * FROM tb_member ORDER BY member_id DESC
-    </select>
 
     <select id="selectAllMembers" resultType="MemberDTO">
         SELECT
-        member_idx AS id,
-        member_id AS userId,
-        member_pwd AS userPw,
-        member_name AS userName,
-        member_gender AS gender,
-        member_phone AS phone,
-        member_email AS email,
-        member_level AS memberLevel
+        member_idx,
+        member_id,
+        member_pwd,
+        member_name,
+        member_gender,
+        member_phone,
+        member_email,
+        member_join_date,
+        member_level,
+        member_status
         FROM tb_member
         ORDER BY member_idx DESC
+    </select>
+
+    <select id="selectAllReservations" resultType="ReservationDTO">
+        SELECT
+        rv_idx,
+        rv_code,
+        rv_room_idx,
+        rv_start_date,
+        rv_end_date,
+        rv_person_adults,
+        rv_person_kids,
+        rv_member_idx,
+        rv_date,
+        rv_status,
+        rv_pay
+        FROM tb_reservation
+        ORDER BY rv_idx DESC
     </select>
 </mapper>

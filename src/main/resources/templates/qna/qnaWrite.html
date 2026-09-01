@@ -12,133 +12,133 @@
           crossorigin="anonymous"></script>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-      margin: 0;
-      padding-bottom: 50px;
-    }
+      body {
+          font-family: 'Noto Sans KR', sans-serif;
+          background-color: #f4f6f8;
+          color: #333;
+          margin: 0;
+          padding-bottom: 50px;
+      }
 
-    .container-box {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+      .container-box {
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 0 20px;
+      }
 
-    .card {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 35px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      border: none;
-    }
+      .card {
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 35px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          border: none;
+      }
 
-    .section-title-wrap {
-      border-bottom: 2px solid #2e7d32;
-      padding-bottom: 12px;
-      margin-bottom: 30px;
-    }
+      .section-title-wrap {
+          border-bottom: 2px solid #2e7d32;
+          padding-bottom: 12px;
+          margin-bottom: 30px;
+      }
 
-    .section-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #2e7d32;
-      margin: 0;
-    }
+      .section-title {
+          font-size: 22px;
+          font-weight: 700;
+          color: #2e7d32;
+          margin: 0;
+      }
 
-    .form-group {
-      margin-bottom: 22px;
-    }
+      .form-group {
+          margin-bottom: 22px;
+      }
 
-    .form-group label {
-      display: block;
-      font-size: 15px;
-      font-weight: 600;
-      color: #444;
-      margin-bottom: 8px;
-    }
+      .form-group label {
+          display: block;
+          font-size: 15px;
+          font-weight: 600;
+          color: #444;
+          margin-bottom: 8px;
+      }
 
-    .form-control {
-      width: 100%;
-      padding: 12px 14px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-      transition: border-color 0.2s;
-      font-family: inherit;
-    }
+      .form-control {
+          width: 100%;
+          padding: 12px 14px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          outline: none;
+          transition: border-color 0.2s;
+          font-family: inherit;
+      }
 
-    .form-control:focus {
-      border-color: #2e7d32;
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
-    }
+      .form-control:focus {
+          border-color: #2e7d32;
+          box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+      }
 
-    textarea.form-control {
-      resize: vertical;
-      min-height: 180px;
-    }
+      textarea.form-control {
+          resize: vertical;
+          min-height: 180px;
+      }
 
-    .btn-group-custom {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid #eee;
-    }
+      .btn-group-custom {
+          display: flex;
+          justify-content: flex-end;
+          gap: 10px;
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid #eee;
+      }
 
-    .btn-custom-action {
-      padding: 10px 24px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 4px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
+      .btn-custom-action {
+          padding: 10px 24px;
+          font-size: 14px;
+          font-weight: 600;
+          border-radius: 4px;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.2s;
+      }
 
-    .btn-submit {
-      background-color: #2e7d32;
-      color: white;
-    }
+      .btn-submit {
+          background-color: #2e7d32;
+          color: white;
+      }
 
-    .btn-submit:hover {
-      background-color: #1b5e20;
-      color: white;
-    }
+      .btn-submit:hover {
+          background-color: #1b5e20;
+          color: white;
+      }
 
-    .btn-cancel {
-      background-color: #757575;
-      color: white;
-    }
+      .btn-cancel {
+          background-color: #757575;
+          color: white;
+      }
 
-    .btn-cancel:hover {
-      background-color: #616161;
-      color: white;
-    }
+      .btn-cancel:hover {
+          background-color: #616161;
+          color: white;
+      }
 
-    .admin-link {
-      font-size: 12px;
-      opacity: 0.7;
-      text-decoration: none;
-      color: rgba(0,0,0,0.6);
-      transition: opacity 0.2s;
-    }
-    .admin-link:hover { opacity: 1; color: #000; }
-    .header-auth-btn {
-      font-size: 13px !important;
-      padding: 6px 14px !important;
-      white-space: nowrap;
-      line-height: 1.5;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+      .admin-link {
+          font-size: 12px;
+          opacity: 0.7;
+          text-decoration: none;
+          color: rgba(0,0,0,0.6);
+          transition: opacity 0.2s;
+      }
+      .admin-link:hover { opacity: 1; color: #000; }
+      .header-auth-btn {
+          font-size: 13px !important;
+          padding: 6px 14px !important;
+          white-space: nowrap;
+          line-height: 1.5;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+      }
   </style>
 </head>
 <body>
@@ -190,9 +190,9 @@
       </div>
 
       <div class="form-group">
-        <label for="writer">작성자</label>
+        <label>작성자</label>
         <!-- 로그인한 회원의 이름이 자동 입력되며 수정 불가 처리 -->
-        <input type="text" id="writer" name="writer" class="form-control" th:value="${session.loginUser != null ? session.loginUser.userName : ''}" readonly>
+        <input type="text" class="form-control bg-light" th:value="${session.loginUser != null ? session.loginUser.memberName : ''}" readonly>
       </div>
 
       <div class="form-group">

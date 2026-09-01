@@ -24,8 +24,8 @@ public class MemberService {
     }
 
     public MemberDTO findMemberById(String memberId){
-        MemberDTO member = memberMapper.selectMemberByUserId(memberId);
-        return member;
+        return memberMapper.selectMemberByUserId(memberId);
+
     }
 
     public List<MemberDTO> getAllMembers() throws Exception {
@@ -41,47 +41,6 @@ public class MemberService {
     // [추가] 회원 정보 수정 구현
     public void updateUserInfo(MemberDTO user) {
         memberMapper.updateUserInfo(user);
-    }
-
-    // --- Q&A 관련 ---
-    public void createQna(QnaDTO qna) throws Exception {
-        memberMapper.insertQna(qna);
-    }
-
-    public List<QnaDTO> getAllQna() throws Exception {
-        return memberMapper.selectAllQna();
-    }
-
-    public QnaDTO getQnaById(Long id) throws Exception {
-        return memberMapper.selectQnaById(id);
-    }
-
-    public void replyQna(Long id, String answer) throws Exception {
-        memberMapper.updateQnaAnswer(id, answer);
-    }
-
-    public List<QnaDTO> selectAllQna() {
-        return memberMapper.selectAllQna();
-    }
-
-    public void insertQna(QnaDTO qna) {
-        try {
-            memberMapper.insertQna(qna);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public QnaDTO getQnaById(long id) {
-        return memberMapper.selectQnaById(id);
-    }
-
-    public void updateQna(QnaDTO qna) {
-        memberMapper.updateQna(qna);
-    }
-
-    public void deleteQna(long id) {
-        memberMapper.deleteQna(id);
     }
 
     // --- 숙소 및 예약 관련 ---
