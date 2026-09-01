@@ -13,6 +13,7 @@
     <div th:replace="~{layout/header :: subHeader('subintro.png')}"></div>
 </header>
 <main>
+    <!-- 사이드바 -->
     <div class="container my-5" style="min-height: 600px;">
         <div class="row">
             <div class="col-lg-3 mb-4">
@@ -20,7 +21,7 @@
                     <div class="card-header bg-success text-white fw-bold py-3">
                         <i class="bi bi-house-door-fill me-2"></i>캠핑장소개
                     </div>
-                    <div class="list-group list-group-flush">
+                    <div class="list-group">
                         <a th:href="@{/RoomIntro}" href="/RoomIntro" class="list-group-item list-group-item-action active py-3">
                             <i class="bi bi-chevron-right me-2"></i>캠핑장소개</a>
                         <a th:href="@{/Facilities}" href="/Facilities" class="list-group-item list-group-item-action py-3">
@@ -28,7 +29,7 @@
                     </div>
                 </div>
             </div>
-
+    <!-- 메인 > 캠핑장소개 -->
             <div class="col-lg-9 ps-lg-4">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h3 class="fw-bold m-0">캠핑장소개</h3>
@@ -42,9 +43,8 @@
                         </ol>
                     </nav>
                 </div>
-
                 <hr class="mb-4">
-
+    <!-- 이미지를 포함한 대문 -->
                 <div class="row align-items-center mb-5 mt-4">
                     <div class="col-lg-7">
                         <h3 class="text-warning text-center fw-bold fst-italic mb-3">글램핑 · 오토캠핑 · 카라반</h3>
@@ -52,12 +52,12 @@
                     </div>
                     <div class="col-lg-5 text-center">
                         <div class="rounded-circle overflow-hidden border border-4 border-light shadow mx-auto"
-                             style="width: 320px; height: 320px;">
+                            style="width: 320px; height: 320px;">
                             <img th:src="@{/images/Camp.png}" src="/images/Camp.png" alt="메인 캠핑장" class="w-100 h-100 object-fit-cover">
                         </div>
                     </div>
                 </div>
-
+    <!-- 소개문 -->
                 <div class="text-secondary lh-lg px-2">
                     <p class="mb-4">
                         1) 몸만 와서 편안하게 즐기는 럭셔리 <strong>글램핑</strong>부터, 자연과 가장 가까운 곳에서 나만의 사이트를 꾸미는 <strong>오토캠핑</strong>,
@@ -72,8 +72,10 @@
         </div>
     </div>
 </main>
+
 <footer>
-    <!-- <div th:replace="~{layout/footer :: footer}"></div> -->
+    <div th:replace="~{layout/footer :: footer}"></div>
 </footer>
+
 </body>
 </html>
