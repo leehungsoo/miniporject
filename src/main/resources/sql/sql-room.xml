@@ -7,10 +7,24 @@
 
     <!-- 방 목록 조회 -->
     <select id="selectRoomList" resultType="RestayDTO">
-        SELECT room_idx, room_name, room_size, room_basic_person, room_max_person, room_price_weekdays, room_price_weekend, room_price_shoulder_weekdays,
-        room_price_shoulder_weekend, room_price_peak_weekdays, room_price_peak_weekend, room_service
-        FROM tb_room
-        ORDER BY room_idx ASC
+        SELECT
+        r.room_idx,
+        r.room_name,
+        r.room_size,
+        r.room_basic_person,
+        r.room_max_person,
+        r.room_price_weekdays,
+        r.room_price_weekend,
+        r.room_price_shoulder_weekdays,
+        r.room_price_shoulder_weekend,
+        r.room_price_peak_weekdays,
+        r.room_price_peak_weekend,
+        r.room_service,
+        MIN(res.resource_path) AS resourcePath
+        FROM tb_room r
+        LEFT JOIN tb_resource res ON r.room_idx = res.resource_room_idx
+        GROUP BY r.room_idx
+        ORDER BY r.room_idx ASC
     </select>
 
     <!-- 방 등록 -->
@@ -56,4 +70,14 @@
         DELETE FROM tb_room
         WHERE room_idx = #{roomIdx}
     </delete>
+
+    <select id="selectResourceListByRoomIdx" parameterType="int" resultType="RestayDTO">
+        SELECT
+        resource_idx,
+        resource_path,
+        resource_room_idx
+        FROM tb_resource
+        WHERE resource_room_idx = #{roomIdx}
+        ORDER BY resource_idx ASC
+    </select>
 </mapper>
