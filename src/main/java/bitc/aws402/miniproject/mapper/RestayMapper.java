@@ -2,6 +2,7 @@ package bitc.aws402.miniproject.mapper;
 
 import bitc.aws402.miniproject.dto.RestayDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,11 +17,11 @@ public interface RestayMapper {
     void insertRoom(RestayDTO room);
 
     // 3. 방 상세 조회(세부 페이지)
-    RestayDTO selectRoomDetail(int roomIdx);
+    RestayDTO selectRoomDetail(@Param("roomIdx") int roomIdx);
 
     // 4. 방 정보 수정
     void updateRoom(RestayDTO room);
 
     // 5. 방 정보 삭제
-    void deleteRoom(int roomIdx);
+    void deleteRoom(@Param("roomIdx") int roomIdx);
 }
