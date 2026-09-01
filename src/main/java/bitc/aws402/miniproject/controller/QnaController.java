@@ -2,8 +2,6 @@ package bitc.aws402.miniproject.controller;
 
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
-import bitc.aws402.miniproject.dto.ReplyDTO;
-import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,13 +22,11 @@ import java.util.List;
 @Controller
 public class QnaController {
 
-    private final MemberService memberService;
-
     private final QnaService qnaService;
 
     // Q&A 목록
     @GetMapping("/list")
-    public String selectQnaList(Model model) throws Exception {
+    public String selectQnaList(Model model) {
         List<QnaDTO> list = qnaService.selectQnaList();
         model.addAttribute("list", list);
         return "qna/qnaList";
@@ -50,7 +46,7 @@ public class QnaController {
 
     // Q&A 작성 처리
     @PostMapping("/write")
-    public String qnaWriteProcess(QnaDTO qna, HttpSession session) throws Exception {
+    public String qnaWriteProcess(QnaDTO qna, HttpSession session){
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login?redirectURL=/qna/write";
@@ -63,7 +59,7 @@ public class QnaController {
 
     // Q&A 상세 조회
     @GetMapping("/detail")
-    public String selectQnaDetail(@RequestParam("id") int id, Model model) throws Exception {
+    public String selectQnaDetail(@RequestParam("id") int id, Model model){
         qnaService.updateHitCount(id);
         QnaDTO qna = qnaService.selectQnaDetail(id);
         if (qna == null) {
@@ -75,7 +71,7 @@ public class QnaController {
 
     // Q&A 수정 폼 (작성자 본인 확인)
     @GetMapping("/edit")
-    public String qnaEditForm(@RequestParam("id") int id, HttpSession session, Model model) throws Exception {
+    public String qnaEditForm(@RequestParam("id") int id, HttpSession session, Model model) {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login?redirectURL=/qna/edit?id=" + id;
@@ -92,7 +88,7 @@ public class QnaController {
 
     // Q&A 수정 처리
     @PostMapping("/edit")
-    public String qnaUpdateProcess(QnaDTO qna, HttpSession session) throws Exception {
+    public String qnaUpdateProcess(QnaDTO qna, HttpSession session) {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login";
@@ -109,7 +105,7 @@ public class QnaController {
 
     // Q&A 삭제 처리 (작성자 본인 확인)
     @GetMapping("/delete")
-    public String qnaDeleteProcess(@RequestParam("id") int id, HttpSession session) throws Exception {
+    public String qnaDeleteProcess(@RequestParam("id") int id, HttpSession session) {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login";
@@ -124,7 +120,7 @@ public class QnaController {
 
     // 관리자 답변 등록
     @PostMapping("/admin/answer")
-    public String insertQnaAnswer(QnaDTO qna) throws Exception {
+    public String insertQnaAnswer(QnaDTO qna) {
         qnaService.insertQnaAnswer(qna);
         return "redirect:/qna/detail?id=" + qna.getId();
     }

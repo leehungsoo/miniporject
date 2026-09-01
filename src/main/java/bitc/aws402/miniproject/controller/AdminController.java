@@ -3,7 +3,6 @@ package bitc.aws402.miniproject.controller;
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.service.AdminService;
-import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
