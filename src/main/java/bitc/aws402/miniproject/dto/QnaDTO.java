@@ -11,6 +11,7 @@ public class QnaDTO {
     private String title;
     private String content;
     private int writer;
+    private String memberId;
     private LocalDateTime createdAt;
     private int cnt;
 

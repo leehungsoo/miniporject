@@ -55,33 +55,33 @@ public class AdminController {
         }
     }
 
-//    mybatis 로 변경 필요
-@GetMapping("/dashboard")
-public String dashboard(Model model) {
-    try {
-        // AdminMapper에 정의된 메서드명과 일치시킴
-        List<MemberDTO> members = adminService.selectMemberList();
-        List<Map<String, Object>> accommodations = adminService.selectAccommodationList();
-        List<Map<String, Object>> reservationList = adminService.selectReservationList();
-        List<QnaDTO> qnaList = qnaService.selectQnaList();
+    //    mybatis 로 변경 필요
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        try {
+            // AdminMapper에 정의된 메서드명과 일치시킴
+            List<MemberDTO> members = adminService.selectMemberList();
+            List<Map<String, Object>> accommodations = adminService.selectAccommodationList();
+            List<Map<String, Object>> reservationList = adminService.selectReservationList();
+            List<QnaDTO> qnaList = qnaService.selectQnaList();
 
-        // dashboard.html에서 사용하는 모델 변수명에 맞게 매핑
-        model.addAttribute("members", members);
-        model.addAttribute("accommodations", accommodations);
-        model.addAttribute("reservationList", reservationList);
-        model.addAttribute("qnaList", qnaList);
+            // dashboard.html에서 사용하는 모델 변수명에 맞게 매핑
+            model.addAttribute("members", members);
+            model.addAttribute("accommodations", accommodations);
+            model.addAttribute("reservationList", reservationList);
+            model.addAttribute("qnaList", qnaList);
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        // 오류 발생 시 뷰에서 에러가 나지 않도록 방어 코드 적용
-        model.addAttribute("members", new java.util.ArrayList<>());
-        model.addAttribute("accommodations", new java.util.ArrayList<>());
-        model.addAttribute("reservationList", new java.util.ArrayList<>());
-        model.addAttribute("qnaList", new java.util.ArrayList<>());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 오류 발생 시 뷰에서 에러가 나지 않도록 방어 코드 적용
+            model.addAttribute("members", new java.util.ArrayList<>());
+            model.addAttribute("accommodations", new java.util.ArrayList<>());
+            model.addAttribute("reservationList", new java.util.ArrayList<>());
+            model.addAttribute("qnaList", new java.util.ArrayList<>());
+        }
+
+        return "admin/dashboard";
     }
-
-    return "admin/dashboard";
-}
 
     @GetMapping("/logout")
     public String adminLogout(HttpSession session) {
@@ -124,8 +124,6 @@ public String dashboard(Model model) {
                                 HttpSession session) {
         try {
             MemberDTO adminUser = (MemberDTO) session.getAttribute("adminUser");
-            System.out.println(">>> 현재 로그인된 관리자 세션: " + adminUser);
-
             if (adminUser == null) {
                 return "redirect:/member/login";
             }
@@ -133,9 +131,20 @@ public String dashboard(Model model) {
             QnaDTO qna = new QnaDTO();
             qna.setId(id);
             qna.setAnswer(reply);
+
+            // String.valueOf()를 제거하고 숫자(int) 그대로 세팅
             qna.setWriter(adminUser.getMemberIdx());
 
-            adminService.saveQnaAnswer(qna);
+            // 이미 해당 글에 등록된 답변이 있는지 개수 확인
+            int replyCount = adminService.selectReplyCount(id);
+
+            if (replyCount > 0) {
+                // 이미 답변이 존재한다면 -> 수정(UPDATE)
+                adminService.updateQnaAnswer(qna);
+            } else {
+                // 답변이 없다면 -> 새로 등록(INSERT)
+                adminService.insertQnaAnswer(qna);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

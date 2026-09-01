@@ -27,7 +27,7 @@ public interface AdminMapper {
   List<Map<String, Object>> selectQnaList() throws Exception;
 
   // 관리자 Q&A 답변 등록
-  int selectReplyCount(int boardIdx);
+  int selectReplyCount(int id);
   void insertQnaAnswer(QnaDTO qna);
   void updateQnaAnswer(QnaDTO qna);
 }

@@ -2,6 +2,7 @@ package bitc.aws402.miniproject.controller;
 
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
+import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,11 +23,13 @@ import java.util.List;
 @Controller
 public class QnaController {
 
+    private final MemberService memberService;
+
     private final QnaService qnaService;
 
     // Q&A 목록
     @GetMapping("/list")
-    public String selectQnaList(Model model) {
+    public String selectQnaList(Model model) throws Exception {
         List<QnaDTO> list = qnaService.selectQnaList();
         model.addAttribute("list", list);
         return "qna/qnaList";
@@ -46,7 +49,7 @@ public class QnaController {
 
     // Q&A 작성 처리
     @PostMapping("/write")
-    public String qnaWriteProcess(QnaDTO qna, HttpSession session){
+    public String qnaWriteProcess(QnaDTO qna, HttpSession session) throws Exception {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login?redirectURL=/qna/write";
@@ -59,7 +62,7 @@ public class QnaController {
 
     // Q&A 상세 조회
     @GetMapping("/detail")
-    public String selectQnaDetail(@RequestParam("id") int id, Model model){
+    public String selectQnaDetail(@RequestParam("id") int id, Model model) throws Exception {
         qnaService.updateHitCount(id);
         QnaDTO qna = qnaService.selectQnaDetail(id);
         if (qna == null) {
@@ -71,14 +74,15 @@ public class QnaController {
 
     // Q&A 수정 폼 (작성자 본인 확인)
     @GetMapping("/edit")
-    public String qnaEditForm(@RequestParam("id") int id, HttpSession session, Model model) {
+    public String qnaEditForm(@RequestParam("id") int id, HttpSession session, Model model) throws Exception {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login?redirectURL=/qna/edit?id=" + id;
         }
 
         QnaDTO qna = qnaService.selectQnaDetail(id);
-        if (qna == null || qna.getWriter() != loginUser.getMemberIdx()) {
+
+        if (qna == null || loginUser.getMemberIdx() != qna.getWriter()) {
             return "redirect:/qna/list";
         }
 
@@ -88,14 +92,15 @@ public class QnaController {
 
     // Q&A 수정 처리
     @PostMapping("/edit")
-    public String qnaUpdateProcess(QnaDTO qna, HttpSession session) {
+    public String qnaUpdateProcess(QnaDTO qna, HttpSession session) throws Exception {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login";
         }
 
         QnaDTO originQna = qnaService.selectQnaDetail(qna.getId());
-        if (originQna == null || originQna.getWriter() != loginUser.getMemberIdx()) {
+
+        if (originQna == null || loginUser.getMemberIdx() != originQna.getWriter()) {
             return "redirect:/qna/list";
         }
 
@@ -105,14 +110,15 @@ public class QnaController {
 
     // Q&A 삭제 처리 (작성자 본인 확인)
     @GetMapping("/delete")
-    public String qnaDeleteProcess(@RequestParam("id") int id, HttpSession session) {
+    public String qnaDeleteProcess(@RequestParam("id") int id, HttpSession session) throws Exception {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/member/login";
         }
 
         QnaDTO qna = qnaService.selectQnaDetail(id);
-        if (qna != null && qna.getWriter() == loginUser.getMemberIdx()) {
+
+        if (qna != null && loginUser.getMemberIdx() == qna.getWriter()) {
             qnaService.deleteQna(id);
         }
         return "redirect:/qna/list";
@@ -120,7 +126,7 @@ public class QnaController {
 
     // 관리자 답변 등록
     @PostMapping("/admin/answer")
-    public String insertQnaAnswer(QnaDTO qna) {
+    public String insertQnaAnswer(QnaDTO qna) throws Exception {
         qnaService.insertQnaAnswer(qna);
         return "redirect:/qna/detail?id=" + qna.getId();
     }

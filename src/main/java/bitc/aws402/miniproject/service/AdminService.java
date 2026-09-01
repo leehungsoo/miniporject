@@ -55,13 +55,14 @@ public class AdminService {
   }
 
   // 답변 존재 여부에 따라 INSERT 또는 UPDATE를 수행하는 통합 메서드
-  public void saveQnaAnswer(QnaDTO qna) throws Exception {
-    int count = adminMapper.selectReplyCount(qna.getId());
 
-    if (count > 0) {
-      adminMapper.updateQnaAnswer(qna);
-    } else {
-      adminMapper.insertQnaAnswer(qna);
-    }
+  // 답변 존재 여부를 확인하는 메서드 추가
+  public int selectReplyCount(int id) throws Exception {
+    return adminMapper.selectReplyCount(id);
+  }
+
+  // 기존 답변을 수정하는 메서드 추가
+  public void updateQnaAnswer(QnaDTO qna) throws Exception {
+    adminMapper.updateQnaAnswer(qna);
   }
 }

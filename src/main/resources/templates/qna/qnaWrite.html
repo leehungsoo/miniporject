@@ -162,7 +162,7 @@
         </ul>
         <div class="d-flex align-items-center gap-2">
           <div th:if="${session.loginUser != null}" class="d-flex align-items-center gap-2">
-            <span th:text="${session.loginUser.userName} + '님'" class="text-dark fw-semibold small text-nowrap"></span>
+            <span th:text="${session.loginUser.memberName} + '님'" class="text-dark fw-semibold small text-nowrap"></span>
             <a th:href="@{/member/mypage}" class="btn btn-outline-success rounded-pill header-auth-btn">마이페이지</a>
             <a th:href="@{/member/logout}" class="btn btn-success rounded-pill text-white fw-semibold header-auth-btn">로그아웃</a>
           </div>

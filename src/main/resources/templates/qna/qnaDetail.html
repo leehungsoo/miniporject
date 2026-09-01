@@ -72,7 +72,7 @@
         </ul>
         <div class="d-flex align-items-center gap-2">
           <div th:if="${session.loginUser != null}" class="d-flex align-items-center gap-2">
-            <span th:text="${session.loginUser.userName} + '님'" class="text-dark fw-semibold small text-nowrap"></span>
+            <span th:text="${session.loginUser.memberName} + '님'" class="text-dark fw-semibold small text-nowrap"></span>
             <a th:href="@{/member/mypage}" class="btn btn-outline-success rounded-pill header-auth-btn">마이페이지</a>
             <a th:href="@{/member/logout}" class="btn btn-success rounded-pill text-white fw-semibold header-auth-btn">로그아웃</a>
           </div>
@@ -95,7 +95,7 @@
       <label>제목:</label> <span th:text="${qna.title}">제목이 표시됩니다.</span>
     </div>
     <div class="info-group">
-      <label>작성자:</label> <span th:text="${qna.writer}">작성자명</span>
+      <label>작성자:</label> <span th:text="${qna.memberId}">작성자명</span>
     </div>
     <div class="info-group">
       <label>문의내용:</label>
@@ -103,7 +103,7 @@
     </div>
 
     <!-- 관리자 답변 영역 -->
-    <div class="admin-reply-box" th:if="${(qna.answer != null and qna.answer != '') or (qna.reply != null and qna.reply != '')}">
+    <div class="admin-reply-box" th:if="${(qna.answer != null and qna.answer != '')}">
       <div class="admin-reply-title">
         <span>관리자 답변</span>
         <span class="reply-date" th:text="${qna.answerDate != null ? qna.answerDate : (qna.replyCreatedAt != null ? #temporals.format(qna.replyCreatedAt, 'yyyy-MM-dd HH:mm') : '')}"></span>
@@ -112,7 +112,7 @@
     </div>
 
     <!-- 미답변 안내 영역 -->
-    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${(qna.answer == null or qna.answer == '') and (qna.reply == null or qna.reply == '')}">
+    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${(qna.answer == null or qna.answer == '')}">
       <small>등록된 관리자 답변이 없습니다. 답변을 기다려주세요.</small>
     </div>
 

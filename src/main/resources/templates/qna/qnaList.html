@@ -178,7 +178,7 @@
         <td>
           <a class="title-link" th:href="@{/qna/detail(id=${item.id})}" th:text="${item.title}">제목</a>
         </td>
-        <td th:text="${item.writer}">작성자</td>
+        <td th:text="${item.memberId}">작성자</td>
         <td th:text="${item.createdAt}">2026-08-31</td>
         <td th:text="${item.cnt}">0</td>
       </tr>

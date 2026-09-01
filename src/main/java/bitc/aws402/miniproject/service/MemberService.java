@@ -2,7 +2,6 @@ package bitc.aws402.miniproject.service;
 
 import bitc.aws402.miniproject.dto.AccommodationDTO;
 import bitc.aws402.miniproject.dto.MemberDTO;
-import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.dto.ReservationDTO;
 import bitc.aws402.miniproject.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,8 @@ public class MemberService {
         memberMapper.insertMember(member);
     }
 
-    public MemberDTO findMemberById(String memberId){
+    public MemberDTO findMemberById(String memberId) {
         return memberMapper.selectMemberByUserId(memberId);
-
     }
 
     public List<MemberDTO> getAllMembers() throws Exception {
@@ -33,12 +31,12 @@ public class MemberService {
         return list != null ? list : Collections.emptyList();
     }
 
-    // [추가] 마이페이지 회원 정보 조회 구현
+    // 마이페이지 회원 정보 조회
     public MemberDTO getUserInfo(String userId) {
         return memberMapper.selectUserInfo(userId);
     }
 
-    // [추가] 회원 정보 수정 구현
+    // 회원 정보 수정
     public void updateUserInfo(MemberDTO user) {
         memberMapper.updateUserInfo(user);
     }

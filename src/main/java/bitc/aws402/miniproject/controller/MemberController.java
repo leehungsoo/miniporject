@@ -23,10 +23,10 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String signupProcess(@ModelAttribute MemberDTO member, RedirectAttributes redirectAttributes){
+    public String signupProcess(MemberDTO member, RedirectAttributes redirectAttributes){
         try {
             memberService.registerMember(member);
-            redirectAttributes.addFlashAttribute("msg", "회원가입 성공하였습니다");
+            redirectAttributes.addFlashAttribute("msg", "회원가입에 성공하였습니다.");
             return "redirect:/member/login";
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,17 +75,6 @@ public class MemberController {
 
         if (redirectURL != null && !redirectURL.isEmpty()) {
             return "redirect:" + redirectURL;
-        }
-
-        String loginRedirectUrl =
-                (String) session.getAttribute("loginRedirectUrl");
-
-
-        if (loginRedirectUrl != null) {
-
-            session.removeAttribute("loginRedirectUrl");
-
-            return "redirect:" + loginRedirectUrl;
         }
         return "redirect:/";
     }

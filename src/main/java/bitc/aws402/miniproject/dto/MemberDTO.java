@@ -15,7 +15,12 @@ public class MemberDTO {
   private int memberLevel;
   private int memberStatus;
 
-//  추형호 -----
+  // Thymeleaf 화면에서 ${session.loginUser.userName} 호출 시 에러 방지용 메서드 추가
+  public String getUserName() {
+    return memberName;
+  }
+
+  //  추형호 -----
   public String getRole(){
     return memberLevel == 99 ? "ADMIN":"USER";
   }
