@@ -18,5 +18,5 @@ public class RestayDTO {
     private int roomPriceShoulderWeekend;
     private int roomPricePeakWeekdays;
     private int roomPricePeakWeekend;
-
+    private String resourcePath;
 }
