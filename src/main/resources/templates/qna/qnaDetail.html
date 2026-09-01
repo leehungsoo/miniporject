@@ -12,43 +12,43 @@
           crossorigin="anonymous"></script>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; color: #333333; padding-bottom: 50px; }
-    .container-box { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    .card { background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: none; }
-    .title { font-size: 20px; font-weight: 700; color: #0d5c3a; border-bottom: 2px solid #0d5c3a; padding-bottom: 10px; margin-bottom: 20px; }
-    .info-group { margin-bottom: 15px; font-size: 14px; }
-    .info-group label { font-weight: bold; color: #555; display: inline-block; width: 80px; }
-    .content-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 15px; border-radius: 4px; min-height: 120px; margin-top: 10px; font-size: 14px; white-space: pre-line; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; color: #333333; padding-bottom: 50px; }
+      .container-box { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+      .card { background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: none; }
+      .title { font-size: 20px; font-weight: 700; color: #0d5c3a; border-bottom: 2px solid #0d5c3a; padding-bottom: 10px; margin-bottom: 20px; }
+      .info-group { margin-bottom: 15px; font-size: 14px; }
+      .info-group label { font-weight: bold; color: #555; display: inline-block; width: 80px; }
+      .content-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 15px; border-radius: 4px; min-height: 120px; margin-top: 10px; font-size: 14px; white-space: pre-line; }
 
-    .admin-reply-box { background: #e8f5e9; border: 1px solid #c8e6c9; padding: 20px; border-radius: 6px; margin-top: 30px; }
-    .admin-reply-title { font-weight: bold; color: #2e7d32; margin-bottom: 10px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
-    .reply-date { font-size: 12px; color: #666; font-weight: normal; }
+      .admin-reply-box { background: #e8f5e9; border: 1px solid #c8e6c9; padding: 20px; border-radius: 6px; margin-top: 30px; }
+      .admin-reply-title { font-weight: bold; color: #2e7d32; margin-bottom: 10px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
+      .reply-date { font-size: 12px; color: #666; font-weight: normal; }
 
-    .btn-group-custom { margin-top: 30px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 20px; }
-    .btn-custom { padding: 8px 16px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
-    .btn-primary-custom { background-color: #0d5c3a; color: white; }
-    .btn-primary-custom:hover { background-color: #147a4e; color: white; }
-    .btn-secondary-custom { background-color: #6c757d; color: white; }
-    .btn-secondary-custom:hover { background-color: #5a6268; color: white; }
+      .btn-group-custom { margin-top: 30px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 20px; }
+      .btn-custom { padding: 8px 16px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
+      .btn-primary-custom { background-color: #0d5c3a; color: white; }
+      .btn-primary-custom:hover { background-color: #147a4e; color: white; }
+      .btn-secondary-custom { background-color: #6c757d; color: white; }
+      .btn-secondary-custom:hover { background-color: #5a6268; color: white; }
 
-    .admin-link {
-      font-size: 12px;
-      opacity: 0.7;
-      text-decoration: none;
-      color: rgba(0,0,0,0.6);
-      transition: opacity 0.2s;
-    }
-    .admin-link:hover { opacity: 1; color: #000; }
-    .header-auth-btn {
-      font-size: 13px !important;
-      padding: 6px 14px !important;
-      white-space: nowrap;
-      line-height: 1.5;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+      .admin-link {
+          font-size: 12px;
+          opacity: 0.7;
+          text-decoration: none;
+          color: rgba(0,0,0,0.6);
+          transition: opacity 0.2s;
+      }
+      .admin-link:hover { opacity: 1; color: #000; }
+      .header-auth-btn {
+          font-size: 13px !important;
+          padding: 6px 14px !important;
+          white-space: nowrap;
+          line-height: 1.5;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+      }
   </style>
 </head>
 <body>
@@ -92,36 +92,36 @@
     <h2 class="title">Q&A 문의 상세 내용</h2>
 
     <div class="info-group">
-      <label>제목:</label> <span th:text="${qna.boardTitle}">제목이 표시됩니다.</span>
+      <label>제목:</label> <span th:text="${qna.title}">제목이 표시됩니다.</span>
     </div>
     <div class="info-group">
-      <label>작성자:</label> <span th:text="${qna.memberName}">작성자명</span>
+      <label>작성자:</label> <span th:text="${qna.writer}">작성자명</span>
     </div>
     <div class="info-group">
       <label>문의내용:</label>
-      <div class="content-box" th:text="${qna.boardContents}">문의 내용이 표시됩니다.</div>
+      <div class="content-box" th:text="${qna.content}">문의 내용이 표시됩니다.</div>
     </div>
 
     <!-- 관리자 답변 영역 -->
-    <div class="admin-reply-box" th:if="${reply != null}">
+    <div class="admin-reply-box" th:if="${(qna.answer != null and qna.answer != '') or (qna.reply != null and qna.reply != '')}">
       <div class="admin-reply-title">
         <span>관리자 답변</span>
-        <span class="reply-date" th:text="${reply.replyCreateDate != null ? reply.replyCreateDate : (reply.replyCreateDate != null ? #temporals.format(reply.replyCreateDate, 'yyyy-MM-dd HH:mm') : '')}"></span>
+        <span class="reply-date" th:text="${qna.answerDate != null ? qna.answerDate : (qna.replyCreatedAt != null ? #temporals.format(qna.replyCreatedAt, 'yyyy-MM-dd HH:mm') : '')}"></span>
       </div>
-      <div class="content-box bg-white" th:text="${reply.replyContents != null and reply.replyContents != '' ? reply.replyContents : ''}">관리자 답변 내용</div>
+      <div class="content-box bg-white" th:text="${qna.answer != null and qna.answer != '' ? qna.answer : qna.reply}">관리자 답변 내용</div>
     </div>
 
     <!-- 미답변 안내 영역 -->
-    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${reply == null}">
+    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${(qna.answer == null or qna.answer == '') and (qna.reply == null or qna.reply == '')}">
       <small>등록된 관리자 답변이 없습니다. 답변을 기다려주세요.</small>
     </div>
 
     <!-- 하단 버튼 영역 -->
     <div class="btn-group-custom">
-      <!-- 수정 및 삭제 버튼 (작성자와 로그인한 사용자의 아이디가 같을 때만 노출) -->
-      <div th:if="${session.loginUser != null and session.loginUser.memberIdx == qna.boardIdx}" class="d-flex justify-content-end gap-2 mt-3">
-        <a th:href="@{/qna/edit(id=${qna.boardIdx})}" class="btn btn-outline-primary">수정하기</a>
-        <a th:href="@{/qna/delete(id=${qna.boardIdx})}" class="btn btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
+      <!-- 수정 및 삭제 버튼 (작성자와 로그인한 사용자의 고유 번호가 같을 때만 노출) -->
+      <div th:if="${session.loginUser != null and session.loginUser.memberIdx == qna.writer}" class="d-flex justify-content-end gap-2 mt-3">
+        <a th:href="@{/qna/edit(id=${qna.id})}" class="btn btn-outline-primary">수정하기</a>
+        <a th:href="@{/qna/delete(id=${qna.id})}" class="btn btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
       </div>
       <div>
         <a th:href="@{/qna/list}" class="btn-custom btn-primary-custom">목록으로</a>

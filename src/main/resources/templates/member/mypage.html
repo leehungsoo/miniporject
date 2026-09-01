@@ -12,12 +12,12 @@
           crossorigin="anonymous"></script>
 
   <style>
-    body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; }
-    .container { max-width: 600px; margin: 50px auto; }
-    .card { background: #fff; border-radius: 8px; padding: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .title { font-size: 22px; font-weight: 700; color: #0d5c3a; margin-bottom: 30px; text-align: center; border-bottom: 2px solid #0d5c3a; padding-bottom: 15px; }
-    .btn-custom { background-color: #0d5c3a; color: white; width: 100%; padding: 10px; font-weight: 500; }
-    .btn-custom:hover { background-color: #147a4e; color: white; }
+      body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; }
+      .container { max-width: 600px; margin: 50px auto; }
+      .card { background: #fff; border-radius: 8px; padding: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+      .title { font-size: 22px; font-weight: 700; color: #0d5c3a; margin-bottom: 30px; text-align: center; border-bottom: 2px solid #0d5c3a; padding-bottom: 15px; }
+      .btn-custom { background-color: #0d5c3a; color: white; width: 100%; padding: 10px; font-weight: 500; }
+      .btn-custom:hover { background-color: #147a4e; color: white; }
   </style>
 </head>
 <body>
@@ -25,34 +25,31 @@
   <div class="card">
     <h2 class="title">개인정보 수정</h2>
 
-    <!-- 컨트롤러 경로(/member/update)에 맞추고 th:action 사용 -->
     <form th:action="@{/member/update}" method="post">
       <!-- 아이디는 수정 불가하므로 readonly 처리 -->
       <div class="mb-3">
         <label class="form-label fw-bold">아이디</label>
-        <input type="text" class="form-control" th:value="${user.userId}" readonly style="background-color: #e9ecef;">
+        <input type="text" class="form-control" th:value="${user.memberId}" readonly style="background-color: #e9ecef;">
       </div>
 
-      <!-- MemberDTO의 필드명인 userPw와 일치시킴 -->
       <div class="mb-3">
         <label class="form-label fw-bold">새 비밀번호</label>
-        <input type="password" name="userPw" class="form-control" placeholder="변경할 경우에만 입력하세요">
+        <input type="password" name="memberPwd" class="form-control" placeholder="변경할 경우에만 입력하세요">
       </div>
 
-      <!-- MemberDTO의 필드명인 userName과 일치시킴 -->
       <div class="mb-3">
         <label class="form-label fw-bold">이름</label>
-        <input type="text" name="userName" class="form-control" th:value="${user.userName}" required>
+        <input type="text" name="memberName" class="form-control" th:value="${user.memberName}" required>
       </div>
 
       <div class="mb-3">
         <label class="form-label fw-bold">이메일</label>
-        <input type="email" name="email" class="form-control" th:value="${user.email}" required>
+        <input type="email" name="memberEmail" class="form-control" th:value="${user.memberEmail}" required>
       </div>
 
       <div class="mb-3">
         <label class="form-label fw-bold">전화번호</label>
-        <input type="text" name="phone" class="form-control" th:value="${user.phone}">
+        <input type="text" name="memberPhone" class="form-control" th:value="${user.memberPhone}">
       </div>
 
       <div class="d-grid gap-2 mt-4">

@@ -23,24 +23,20 @@ public class QnaService {
         qnaMapper.insertQna(qna);
     }
 
-    public QnaDTO selectQnaDetail(int qnaIdx) {
-        return qnaMapper.selectQnaDetail(qnaIdx);
+    public QnaDTO selectQnaDetail(int id) {
+        return qnaMapper.selectQnaDetail(id);
     }
 
-    public ReplyDTO selectQnaReply(int boardIdx){
-        return qnaMapper.selectQnaReply(boardIdx);
-    }
-
-    public void updateHitCount(int qnaIdx) {
-        qnaMapper.updateHitCount(qnaIdx);
+    public void updateHitCount(int id) {
+        qnaMapper.updateHitCount(id);
     }
 
     public void updateQna(QnaDTO qna) {
         qnaMapper.updateQna(qna);
     }
 
-    public void deleteQna(int qnaIdx) {
-        qnaMapper.deleteQna(qnaIdx);
+    public void deleteQna(int id) {
+        qnaMapper.deleteQna(id);
     }
 
     public void insertQnaAnswer(QnaDTO qna) {

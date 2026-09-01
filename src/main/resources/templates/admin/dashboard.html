@@ -12,86 +12,86 @@
           crossorigin="anonymous"></script>
 
   <style>
-    :root {
-      --primary-green: #198754; /* Bootstrap success 컬러와 동일 */
-      --body-bg: #f5f6f8;
-    }
+      :root {
+          --primary-green: #198754; /* Bootstrap success 컬러와 동일 */
+          --body-bg: #f5f6f8;
+      }
 
-    body {
-      background-color: var(--body-bg);
-      font-family: 'Noto Sans KR', sans-serif;
-      padding-bottom: 50px;
-    }
+      body {
+          background-color: var(--body-bg);
+          font-family: 'Noto Sans KR', sans-serif;
+          padding-bottom: 50px;
+      }
 
-    /* 팀장님 헤더와 동일한 스타일을 적용한 관리자 상단 헤더 바 */
-    .admin-navbar {
-      background-color: #ffffff;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      margin-bottom: 40px;
-    }
+      /* 팀장님 헤더와 동일한 스타일을 적용한 관리자 상단 헤더 바 */
+      .admin-navbar {
+          background-color: #ffffff;
+          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+          margin-bottom: 40px;
+      }
 
-    .sidebar {
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
+      .sidebar {
+          background-color: #ffffff;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      }
 
-    .user-profile-box {
-      background-color: var(--primary-green);
-      color: white;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
+      .user-profile-box {
+          background-color: var(--primary-green);
+          color: white;
+          border-radius: 8px;
+          padding: 20px;
+          margin-bottom: 20px;
+      }
 
-    .nav-menu .menu-btn {
-      width: 100%;
-      text-align: left;
-      padding: 14px 18px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 1px solid #e0e0e0;
-      background-color: #ffffff;
-      color: #333333;
-      font-weight: 500;
-      transition: all 0.2s ease-in-out;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
+      .nav-menu .menu-btn {
+          width: 100%;
+          text-align: left;
+          padding: 14px 18px;
+          margin-bottom: 10px;
+          border-radius: 8px;
+          border: 1px solid #e0e0e0;
+          background-color: #ffffff;
+          color: #333333;
+          font-weight: 500;
+          transition: all 0.2s ease-in-out;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+      }
 
-    .nav-menu .menu-btn:hover {
-      background-color: var(--primary-green);
-      color: #ffffff;
-      border-color: var(--primary-green);
-    }
+      .nav-menu .menu-btn:hover {
+          background-color: var(--primary-green);
+          color: #ffffff;
+          border-color: var(--primary-green);
+      }
 
-    .nav-menu .menu-btn.active {
-      background-color: var(--primary-green) !important;
-      color: #ffffff !important;
-      border-color: var(--primary-green) !important;
-      font-weight: 600;
-    }
+      .nav-menu .menu-btn.active {
+          background-color: var(--primary-green) !important;
+          color: #ffffff !important;
+          border-color: var(--primary-green) !important;
+          font-weight: 600;
+      }
 
-    .content-card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      min-height: 480px;
-    }
+      .content-card {
+          background-color: #ffffff;
+          border-radius: 12px;
+          padding: 30px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+          min-height: 480px;
+      }
 
-    .empty-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 380px;
-      color: #888888;
-    }
+      .empty-placeholder {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 380px;
+          color: #888888;
+      }
   </style>
 </head>
 <body>
@@ -109,7 +109,7 @@
       <small class="text-muted">전체 예약 현황, 회원 정보 및 Q&A 문의를 관리합니다.</small>
     </div>
 
-    <!-- 우측 로그아웃 버튼 (팀장님의 로그인 버튼과 동일한 rounded-pill 스타일 적용) -->
+    <!-- 우측 로그아웃 버튼 -->
     <div class="d-flex">
       <a th:href="@{/admin/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">
         로그아웃
@@ -126,7 +126,7 @@
       <div class="sidebar">
         <div class="user-profile-box text-center">
           <i class="bi bi-person-circle fs-1 mb-2"></i>
-          <h5 class="mb-1" th:text="${session.adminUser != null ? session.adminUser.userId + '님' : '관리자님'}">관리자님</h5>
+          <h5 class="mb-1" th:text="${session.adminUser != null ? session.adminUser.memberName + '님' : '관리자님'}">관리자님</h5>
           <small class="opacity-75">환영합니다!</small>
         </div>
 
@@ -176,11 +176,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr th:each="member : ${members}">
-                <td th:text="${member.userId != null ? member.userId : '-'}">user01</td>
-                <td th:text="${member.userName != null ? member.userName : (member.name != null ? member.name : '-')}">홍길동</td>
-                <td th:text="${member.email != null ? member.email : '-'}">user@example.com</td>
-                <td th:text="${member.phone != null ? member.phone : '-'}">010-0000-0000</td>
+              <tr th:each="member : ${members}" th:if="${members != null and !members.isEmpty()}">
+                <td th:text="${member.memberId != null ? member.memberId : '-'}">user01</td>
+                <td th:text="${member.memberName != null ? member.memberName : '-'}">홍길동</td>
+                <td th:text="${member.memberEmail != null ? member.memberEmail : '-'}">user@example.com</td>
+                <td th:text="${member.memberPhone != null ? member.memberPhone : '-'}">010-0000-0000</td>
                 <td><span class="badge bg-secondary" th:text="${member.role != null ? member.role : 'USER'}">USER</span></td>
               </tr>
               <tr th:if="${members == null or #lists.isEmpty(members)}">
@@ -276,10 +276,10 @@
                   <a th:href="@{/admin/qna/{id}(id=${qna.id})}" th:text="${qna.title}" class="text-decoration-none text-dark fw-bold">제목</a>
                 </td>
                 <td th:text="${qna.writer}">작성자</td>
-                <td th:text="${qna.replyCreatedAt != null ? #temporals.format(qna.replyCreatedAt, 'yyyy-MM-dd') : '-'}">2026-08-31</td>
+                <td th:text="${qna.createdAt != null ? qna.createdAt : '-'}">2026-09-01</td>
                 <td>
-                  <span th:if="${qna.replied == null or qna.replied == 'false'}" class="badge bg-secondary">미답변</span>
-                  <span th:if="${qna.replied != null and qna.replied == 'true'}" class="badge bg-success">답변완료</span>
+                  <span th:if="${qna.answer != null and qna.answer != ''}" class="badge-done">답변완료</span>
+                  <span th:unless="${qna.answer != null and qna.answer != ''}" class="badge-none">미답변</span>
                 </td>
               </tr>
               <tr th:if="${qnaList == null or qnaList.isEmpty()}">
@@ -297,20 +297,20 @@
 </div>
 
 <script>
-  function showTab(tabId, element) {
-    const allTabs = document.querySelectorAll('.tab-content');
-    allTabs.forEach(tab => tab.classList.add('d-none'));
+    function showTab(tabId, element) {
+        const allTabs = document.querySelectorAll('.tab-content');
+        allTabs.forEach(tab => tab.classList.add('d-none'));
 
-    const targetTab = document.getElementById(tabId);
-    if (targetTab) {
-      targetTab.classList.remove('d-none');
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.remove('d-none');
+        }
+
+        const allButtons = document.querySelectorAll('.menu-btn');
+        allButtons.forEach(btn => btn.classList.remove('active'));
+
+        element.classList.add('active');
     }
-
-    const allButtons = document.querySelectorAll('.menu-btn');
-    allButtons.forEach(btn => btn.classList.remove('active'));
-
-    element.classList.add('active');
-  }
 </script>
 </body>
 </html>

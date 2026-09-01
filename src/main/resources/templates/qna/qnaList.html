@@ -12,109 +12,109 @@
           crossorigin="anonymous"></script>
 
   <style>
-    :root {
-      --primary-green: #2e7d32;
-      --hover-green: #1b5e20;
-      --light-bg: #f8f9fa;
-    }
+      :root {
+          --primary-green: #2e7d32;
+          --hover-green: #1b5e20;
+          --light-bg: #f8f9fa;
+      }
 
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #f4f6f8;
-      color: #333333;
-      margin: 0;
-      padding-bottom: 50px;
-    }
+      body {
+          font-family: 'Noto Sans KR', sans-serif;
+          background-color: #f4f6f8;
+          color: #333333;
+          margin: 0;
+          padding-bottom: 50px;
+      }
 
-    .container-box {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+      .container-box {
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 0 20px;
+      }
 
-    .card {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 35px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      border: none;
-    }
+      .card {
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 35px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          border: none;
+      }
 
-    .section-title-wrap {
-      border-bottom: 2px solid var(--primary-green);
-      padding-bottom: 12px;
-      margin-bottom: 30px;
-    }
+      .section-title-wrap {
+          border-bottom: 2px solid var(--primary-green);
+          padding-bottom: 12px;
+          margin-bottom: 30px;
+      }
 
-    .section-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--primary-green);
-      margin: 0;
-    }
+      .section-title {
+          font-size: 22px;
+          font-weight: 700;
+          color: var(--primary-green);
+          margin: 0;
+      }
 
-    .btn-write {
-      background-color: var(--primary-green);
-      color: white;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 10px 24px;
-      border-radius: 4px;
-      transition: background-color 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
+      .btn-write {
+          background-color: var(--primary-green);
+          color: white;
+          font-weight: 600;
+          font-size: 14px;
+          padding: 10px 24px;
+          border-radius: 4px;
+          transition: background-color 0.2s ease;
+          text-decoration: none;
+          display: inline-block;
+      }
 
-    .btn-write:hover {
-      background-color: var(--hover-green);
-      color: white;
-    }
+      .btn-write:hover {
+          background-color: var(--hover-green);
+          color: white;
+      }
 
-    .qna-table th {
-      background-color: var(--light-bg);
-      font-weight: 600;
-      text-align: center;
-      padding: 12px;
-    }
+      .qna-table th {
+          background-color: var(--light-bg);
+          font-weight: 600;
+          text-align: center;
+          padding: 12px;
+      }
 
-    .qna-table td {
-      vertical-align: middle;
-      text-align: center;
-      padding: 14px 12px;
-    }
+      .qna-table td {
+          vertical-align: middle;
+          text-align: center;
+          padding: 14px 12px;
+      }
 
-    .qna-table td:nth-child(2) {
-      text-align: left;
-    }
+      .qna-table td:nth-child(2) {
+          text-align: left;
+      }
 
-    .title-link {
-      color: #333333;
-      text-decoration: none;
-      font-weight: 500;
-    }
+      .title-link {
+          color: #333333;
+          text-decoration: none;
+          font-weight: 500;
+      }
 
-    .title-link:hover {
-      color: var(--primary-green);
-      text-decoration: underline;
-    }
+      .title-link:hover {
+          color: var(--primary-green);
+          text-decoration: underline;
+      }
 
-    .admin-link {
-      font-size: 12px;
-      opacity: 0.7;
-      text-decoration: none;
-      color: rgba(0,0,0,0.6);
-      transition: opacity 0.2s;
-    }
-    .admin-link:hover { opacity: 1; color: #000; }
-    .header-auth-btn {
-      font-size: 13px !important;
-      padding: 6px 14px !important;
-      white-space: nowrap;
-      line-height: 1.5;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+      .admin-link {
+          font-size: 12px;
+          opacity: 0.7;
+          text-decoration: none;
+          color: rgba(0,0,0,0.6);
+          transition: opacity 0.2s;
+      }
+      .admin-link:hover { opacity: 1; color: #000; }
+      .header-auth-btn {
+          font-size: 13px !important;
+          padding: 6px 14px !important;
+          white-space: nowrap;
+          line-height: 1.5;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+      }
   </style>
 </head>
 <body>
@@ -143,7 +143,7 @@
             <a th:href="@{/member/logout}" class="btn btn-success rounded-pill text-white fw-semibold header-auth-btn">로그아웃</a>
           </div>
           <div th:if="${session.loginUser == null}" class="d-flex align-items-center gap-2">
-            <a th:href="@{/member/login}" class="btn btn-outline-success rounded-pill header-auth-btn">로그인</a>
+            <a th:href="@{/member/login(redirectURL='/qna/list')}" class="btn btn-outline-success rounded-pill header-auth-btn">로그인</a>
             <a th:href="@{/member/signup}" class="btn btn-success rounded-pill text-white fw-semibold header-auth-btn">회원가입</a>
           </div>
           <a th:href="@{/admin/login}" class="admin-link ms-1 text-nowrap">관리자</a>
@@ -174,13 +174,13 @@
         <td colspan="5" class="text-center py-4 text-muted">등록된 문의가 없습니다.</td>
       </tr>
       <tr th:each="item : ${list}">
-        <td th:text="${item.boardIdx}">1</td>
+        <td th:text="${item.id}">1</td>
         <td>
-          <a class="title-link" th:href="@{/qna/detail(id=${item.boardIdx})}" th:text="${item.boardTitle}">제목</a>
+          <a class="title-link" th:href="@{/qna/detail(id=${item.id})}" th:text="${item.title}">제목</a>
         </td>
-        <td th:text="${item.memberName}">작성자</td>
-        <td th:text="${item.boardCreateDate}">2026-08-31</td>
-        <td th:text="${item.boardHitCnt}">0</td>
+        <td th:text="${item.writer}">작성자</td>
+        <td th:text="${item.createdAt}">2026-08-31</td>
+        <td th:text="${item.cnt}">0</td>
       </tr>
       </tbody>
     </table>

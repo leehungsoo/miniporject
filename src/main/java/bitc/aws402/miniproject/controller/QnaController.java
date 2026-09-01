@@ -53,11 +53,10 @@ public class QnaController {
     public String qnaWriteProcess(QnaDTO qna, HttpSession session) throws Exception {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/member/login";
+            return "redirect:/member/login?redirectURL=/qna/write";
         }
 
-        // 작성자에 로그인한 사용자의 ID 또는 이름을 지정 (DB 설계에 맞춰 설정, 여기선 userName으로 예시)
-        qna.setBoardCreateIdx(loginUser.getMemberIdx());
+        qna.setWriter(loginUser.getMemberIdx());
         qnaService.insertQna(qna);
         return "redirect:/qna/list";
     }
@@ -70,9 +69,7 @@ public class QnaController {
         if (qna == null) {
             return "redirect:/qna/list";
         }
-        ReplyDTO reply = qnaService.selectQnaReply(id);
         model.addAttribute("qna", qna);
-        model.addAttribute("reply", reply);
         return "qna/qnaDetail";
     }
 
@@ -81,17 +78,12 @@ public class QnaController {
     public String qnaEditForm(@RequestParam("id") int id, HttpSession session, Model model) throws Exception {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/member/login?redirectURL=/qna/detail?id=" + id;
+            return "redirect:/member/login?redirectURL=/qna/edit?id=" + id;
         }
 
         QnaDTO qna = qnaService.selectQnaDetail(id);
-        if (qna == null) {
+        if (qna == null || qna.getWriter() != loginUser.getMemberIdx()) {
             return "redirect:/qna/list";
-        }
-
-        // 작성자 본인 검증 (DB의 writer가 이름인지 아이디인지 확인 후 비교)
-        if (qna.getBoardCreateIdx() != loginUser.getMemberIdx()) {
-            return "redirect:/qna/detail?id=" + id;
         }
 
         model.addAttribute("qna", qna);
@@ -106,13 +98,13 @@ public class QnaController {
             return "redirect:/member/login";
         }
 
-        QnaDTO originQna = qnaService.selectQnaDetail(qna.getBoardIdx());
-        if (originQna == null || qna.getBoardCreateIdx() != loginUser.getMemberIdx()) {
+        QnaDTO originQna = qnaService.selectQnaDetail(qna.getId());
+        if (originQna == null || originQna.getWriter() != loginUser.getMemberIdx()) {
             return "redirect:/qna/list";
         }
 
         qnaService.updateQna(qna);
-        return "redirect:/qna/detail?id=" + qna.getBoardIdx();
+        return "redirect:/qna/detail?id=" + qna.getId();
     }
 
     // Q&A 삭제 처리 (작성자 본인 확인)
@@ -124,7 +116,7 @@ public class QnaController {
         }
 
         QnaDTO qna = qnaService.selectQnaDetail(id);
-        if (qna != null && qna.getBoardCreateIdx() == loginUser.getMemberIdx()) {
+        if (qna != null && qna.getWriter() == loginUser.getMemberIdx()) {
             qnaService.deleteQna(id);
         }
         return "redirect:/qna/list";
@@ -134,6 +126,6 @@ public class QnaController {
     @PostMapping("/admin/answer")
     public String insertQnaAnswer(QnaDTO qna) throws Exception {
         qnaService.insertQnaAnswer(qna);
-        return "redirect:/qna/detail?id=" + qna.getBoardIdx();
+        return "redirect:/qna/detail?id=" + qna.getId();
     }
 }
