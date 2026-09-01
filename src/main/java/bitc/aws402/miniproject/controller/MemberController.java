@@ -76,6 +76,17 @@ public class MemberController {
         if (redirectURL != null && !redirectURL.isEmpty()) {
             return "redirect:" + redirectURL;
         }
+
+        String loginRedirectUrl =
+                (String) session.getAttribute("loginRedirectUrl");
+
+
+        if (loginRedirectUrl != null) {
+
+            session.removeAttribute("loginRedirectUrl");
+
+            return "redirect:" + loginRedirectUrl;
+        }
         return "redirect:/";
     }
 
