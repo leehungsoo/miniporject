@@ -200,7 +200,6 @@
               <tr>
                 <th>숙소 번호</th>
                 <th>숙소명</th>
-                <th>등록자 ID</th>
                 <th>위치</th>
                 <th>가격</th>
               </tr>
@@ -209,9 +208,8 @@
               <tr th:each="item : ${accommodations}" th:if="${accommodations != null and !accommodations.isEmpty()}">
                 <td th:text="${item?.accNo ?: '-'}">H-001</td>
                 <td th:text="${item?.accName ?: '-'}">제주 오션뷰</td>
-                <td th:text="${item?.userId ?: '-'}">user01</td>
-                <td th:text="${item?.location ?: '-'}">제주도 서귀포시</td>
-                <td th:text="${item?.price != null ? #numbers.formatInteger(item.price, 0, 'COMMA') + '원' : '-'}">150,000원</td>
+                <td th:text="${item?.accLocation ?: '-'}">제주도 서귀포시</td>
+                <td th:text="${item?.accPrice != null ? #numbers.formatInteger(item.accPrice, 0, 'COMMA') + '원' : '-'}">150,000원</td>
               </tr>
               <tr th:if="${accommodations == null or accommodations.isEmpty()}">
                 <td colspan="5" class="text-center py-5 text-muted">등록된 숙소 정보가 없습니다.</td>
@@ -239,7 +237,7 @@
               </thead>
               <tbody>
               <tr th:if="${reservationList != null and !reservationList.isEmpty()}" th:each="res : ${reservationList}">
-                <td th:text="${res?.userId}">user01</td>
+                <td th:text="${res?.memberId}">user01</td>
                 <td th:text="${res?.resName}">홍길동</td>
                 <td th:text="${res?.accName}">숙소명</td>
                 <td th:text="${res?.checkIn}">2026-00-00</td>
