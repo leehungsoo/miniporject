@@ -9,13 +9,13 @@
     <select id="selectRoomList" resultType="RestayDTO">
         SELECT room_idx, room_name, room_size, room_basic_person, room_max_person, room_price_weekdays, room_price_weekend, room_price_shoulder_weekdays,
         room_price_shoulder_weekend, room_price_peak_weekdays, room_price_peak_weekend, room_service
-        FROM tb_room2
+        FROM tb_room
         ORDER BY room_idx ASC
     </select>
 
     <!-- 방 등록 -->
     <insert id="insertRoom" parameterType="RestayDTO">
-        INSERT INTO tb_room2 (
+        INSERT INTO tb_room (
         room_name, room_size, room_basic_person, room_max_person, room_price_weekdays, room_price_weekend, room_price_shoulder_weekdays,
         room_price_shoulder_weekend, room_price_peak_weekdays, room_price_peak_weekend, room_service
         )
@@ -29,13 +29,13 @@
     <select id="selectRoomDetail" parameterType="int" resultType="RestayDTO">
         SELECT room_idx, room_name, room_size, room_basic_person, room_max_person, room_price_weekdays, room_price_weekend, room_price_shoulder_weekdays,
         room_price_shoulder_weekend, room_price_peak_weekdays, room_price_peak_weekend, room_service
-        FROM tb_room2
+        FROM tb_room
         WHERE room_idx = #{roomIdx}
     </select>
 
     <!-- 방 정보 수정 -->
     <update id="updateRoom" parameterType="RestayDTO">
-        UPDATE tb_room2
+        UPDATE tb_room
         SET
         room_name = #{roomName},
         room_size = #{roomSize},
@@ -53,7 +53,7 @@
 
     <!-- 방 정보 삭제 -->
     <delete id="deleteRoom" parameterType="int">
-        DELETE FROM tb_room2
+        DELETE FROM tb_room
         WHERE room_idx = #{roomIdx}
     </delete>
 </mapper>
