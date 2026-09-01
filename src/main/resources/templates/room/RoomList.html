@@ -7,105 +7,96 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* 리스트 내 이미지에 마우스커서를 올렸을때 이미지 확대 및 카테고리 수식  */
-        .room-card-img {
-            height: 220px;
-            object-fit: cover;
-            transition: transform 0.2s ease;
-        }
-        .room-card:hover .room-card-img {
-            transform: scale(1.15);
-        }
-        .badge-category {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            z-index: 2;
-        }
+        .room-card-img { height: 220px; object-fit: cover; transition: transform 0.2s ease; }
+        .room-card:hover .room-card-img { transform: scale(1.15); }
+        .badge-category { position: absolute; top: 12px; left: 12px; z-index: 2; }
     </style>
 </head>
 <body class="bg-light">
 
-<header>
-    <div th:replace="~{layout/header :: subHeader('subroom.png')}"></div>
-</header>
-<!-- 사이드 바 -->
+<header><div th:replace="~{layout/header :: subHeader('subroom.png')}"></div></header>
+
 <div class="container my-5" style="min-height: 600px;">
     <div class="row">
+        <!-- 사이드 바 -->
         <div class="col-12 col-md-3 mb-4">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-success text-white fw-bold py-3">
                     <i class="bi bi-house-door-fill me-2"></i>숙소 안내
                 </div>
                 <div class="list-group list-group-flush">
-                    <a th:href="@{/RoomList}" href="/RoomList" class="list-group-item list-group-item-action active py-3">
+                    <a th:href="@{/RoomList}" class="list-group-item list-group-item-action active py-3">
                         <i class="bi bi-chevron-right me-2"></i>전체 숙소 목록
                     </a>
-                    <a th:href="@{/RoomIntro}" href="/RoomIntro" class="list-group-item list-group-item-action py-3">
+                    <a th:href="@{/RoomIntro}" class="list-group-item list-group-item-action py-3">
                         <i class="bi bi-chevron-right me-2"></i>캠핑장 소개
                     </a>
                 </div>
             </div>
         </div>
-<!-- 메인 / 숙소안내 (메인페이지 가기위한 링크 -->
+
         <main class="col-12 col-md-9 ps-lg-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h3 class="fw-bold m-0 text-dark">ROOMS</h3>
                 <nav>
                     <ol class="mb-0 small list-unstyled d-flex gap-2">
-                        <li>
-                            <a th:href="@{/index}" href="/index" class="text-decoration-none text-secondary">
-                                <i class="bi bi-house-door-fill me-1"></i>메인
-                            </a>
-                        </li>
-                        <li class="active text-success fw-bold" aria-current="page" style="font-size:1.0rem;">/ 숙소 안내</li>
+                        <li><a th:href="@{/index}" class="text-decoration-none text-secondary"><i class="bi bi-house-door-fill me-1"></i>메인</a></li>
+                        <li class="active text-success fw-bold" style="font-size:1.0rem;">/ 숙소 안내</li>
                     </ol>
                 </nav>
             </div>
             <p class="text-secondary small mb-3">편안한 휴식을 위한 다양하고 특별한 객실을 만나보세요.</p>
-
             <hr class="mb-4">
-<!-- 카드리스트 형식의 숙소 목록들 -->
-<!-- 세부 내용 추가 -->
-<!-- 데이터베이스 사용-->
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
-                <div class="col" th:each="room, stat : ${roomList}">
-                    <div class="card h-100 border-0 shadow-sm overflow-hidden room-card">
-                        <div class="position-relative overflow-hidden">
-                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${stat.index == 0}">글램핑</span>
-                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${stat.index == 1}">카라반</span>
-                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${stat.index >= 2}">오토캠핑</span>
 
-                            <img th:if="${stat.index == 0}" th:src="@{/images/glamping1.png}" class="card-img-top room-card-img" alt="숙소 이미지">
-                            <img th:if="${stat.index == 1}" th:src="@{/images/Caravan.png}" class="card-img-top room-card-img" alt="숙소 이미지">
-                            <img th:if="${stat.index >= 2}" th:src="@{/images/autoCamp.png}" class="card-img-top room-card-img" alt="숙소 이미지">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4"
+                 th:with="displayList=${#lists.size(roomList) >= 6 ? {roomList[0], roomList[1], roomList[2], roomList[3], roomList[4], roomList[5]} : roomList}">
+
+                <div class="col" th:each="room : ${displayList}">
+                    <div class="card h-100 border-0 shadow-sm overflow-hidden room-card">
+
+                        <!-- 숙소 구분 뱃지달기 -->
+                        <div class="position-relative overflow-hidden">
+                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${#strings.contains(room.roomName, '글램핑')}">글램핑</span>
+                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${#strings.contains(room.roomName, '카라반')}">카라반</span>
+                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${#strings.contains(room.roomName, '스쿨버스')}">스쿨버스</span>
+                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${#strings.contains(room.roomName, '목재')}">목재데크</span>
+                            <span class="badge bg-dark px-2 py-1 small badge-category" th:if="${#strings.contains(room.roomName, '오토캠핑')}">오토캠핑</span>
+
+                            <!-- DB의 resource_path 이미지 적용 -->
+                            <img th:if="${room.resourcePath != null}" th:src="${room.resourcePath}" class="card-img-top room-card-img"
+                                    th:alt="${room.roomName} + ' 이미지'">
+                            <img th:if="${room.resourcePath == null}"
+                                    th:src="@{/images/default.png}"
+                                    class="card-img-top room-card-img"
+                                    alt="기본 이미지">
                         </div>
+
+                        <!-- 숙소 정보 -->
                         <div class="card-body d-flex flex-column justify-content-between p-3">
                             <div>
                                 <h5 class="card-title fw-bold text-dark mb-1" th:text="${room.roomName}">숙소 이름</h5>
                                 <p class="card-text text-muted small mb-2">
-                                    기준 <span th:text="${room.roomBasicPerson}">2</span>인 / 최대 <span th:text="${room.roomMaxPerson}">4</span>인 • <span th:text="${room.roomSize}">26</span>㎡
+                                    기준 <span th:text="${room.roomBasicPerson}">2</span>인 / 최대 <span th:text="${room.roomMaxPerson}">4</span>인 • <span th:text="${room.roomSize}">26</span>
                                 </p>
                                 <p class="card-text text-secondary small mb-3" th:text="${room.roomService}">숙소 설명</p>
                             </div>
                             <div class="mt-auto">
                                 <div class="text-secondary small mb-2">
                                     <i class="bi bi-geo-alt text-danger me-1"></i>
-                                    <span th:if="${stat.index == 0}">강원 강릉시(경포대 인근)</span>
-                                    <span th:if="${stat.index == 1}">강원도 양양 폴라운지 펜션</span>
-                                    <span th:if="${stat.index >= 2}">홍천강오토캠핑장</span>
+                                    <span th:if="${#strings.contains(room.roomName, '글램핑') || #strings.contains(room.roomName, '목재')}">강원 강릉시(경포대 인근)</span>
+                                    <span th:if="${#strings.contains(room.roomName, '카라반')}">강원도 양양 폴라운지 펜션</span>
+                                    <span th:if="${#strings.contains(room.roomName, '오토캠핑') || #strings.contains(room.roomName, '스쿨버스')}">홍천강오토캠핑장</span>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between border-top pt-2">
                                 <span class="text-secondary small">1박 기준</span>
-                                <span class="fw-bold fs-5 text-dark" th:text="${room.roomPriceWeekdays} + '원~'">가격대</span>
+                                <span class="fw-bold fs-5 text-dark" th:text="${#numbers.formatInteger(room.roomPriceWeekdays, 0, 'COMMA')} + '원~'">가격대</span>
                             </div>
                         </div>
-    <!-- 각 숙소마다 ID를 전달하여 각 숙소의 상페 페이지(/RoomList/roomA,B,C)로 이동 -->
                         <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
-                            <a th:if="${stat.index == 0}" th:href="@{/RoomList/roomA(id=${room.roomIdx})}" class="btn btn-outline-secondary btn-sm w-100 rounded-1">상세보기</a>
-                            <a th:if="${stat.index == 1}" th:href="@{/RoomList/roomB(id=${room.roomIdx})}" class="btn btn-outline-secondary btn-sm w-100 rounded-1">상세보기</a>
-                            <a th:if="${stat.index >= 2}" th:href="@{/RoomList/roomC(id=${room.roomIdx})}" class="btn btn-outline-secondary btn-sm w-100 rounded-1">상세보기</a>
+                            <a th:if="${#strings.contains(room.roomName, '글램핑')}" th:href="@{/RoomList/roomA(id=${room.roomIdx})}" class="btn btn-outline-secondary btn-sm w-100 rounded-1">상세보기</a>
+                            <a th:if="${#strings.contains(room.roomName, '카라반')}" th:href="@{/RoomList/roomB(id=${room.roomIdx})}" class="btn btn-outline-secondary btn-sm w-100 rounded-1">상세보기</a>
+                            <a th:if="${!#strings.contains(room.roomName, '글램핑') && !#strings.contains(room.roomName, '카라반')}" th:href="@{/RoomList/roomC(id=${room.roomIdx})}" class="btn btn-outline-secondary btn-sm w-100 rounded-1">상세보기</a>
                         </div>
                     </div>
                 </div>
