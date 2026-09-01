@@ -13,6 +13,7 @@
     <div th:replace="~{layout/header :: subHeader('subfa.png')}"></div>
 </header>
 <main>
+    <!--사이드 바 -->
     <div class="container my-5" style="min-height: 600px;">
         <div class="row">
             <div class="col-lg-3 mb-4">
@@ -26,7 +27,7 @@
                     </div>
                 </div>
             </div>
-
+    <!-- 메인 > 부대시설 -->
             <div class="col-lg-9 ps-lg-4">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h3 class="fw-bold m-0">부대시설</h3>
@@ -42,7 +43,7 @@
                 </div>
 
                 <hr class="mb-4">
-
+    <!-- 글램핑 소개문 -->
                 <div class="d-flex flex-column gap-5 mt-4">
                     <div class="row align-items-center border-bottom pb-4">
                         <div class="col-md-5 mb-3 mb-md-0">
@@ -58,7 +59,7 @@
                             </p>
                         </div>
                     </div>
-
+    <!-- 오토캠핑 소개문 -->
                     <div class="row align-items-center border-bottom pb-4">
                         <div class="col-md-5 mb-3 mb-md-0">
                             <div class="rounded overflow-hidden shadow-sm" style="height: 200px;">
@@ -73,7 +74,7 @@
                             </p>
                         </div>
                     </div>
-
+    <!-- 카라반 소개문 -->
                     <div class="row align-items-center pb-4">
                         <div class="col-md-5 mb-3 mb-md-0">
                             <div class="rounded overflow-hidden shadow-sm" style="height: 200px;">
@@ -94,7 +95,7 @@
     </div>
 </main>
 <footer>
-    <!-- <div th:replace="~{layout/footer :: footer}"></div> -->
+    <div th:replace="~{layout/footer :: footer}"></div>
 </footer>
 
 </body>
