@@ -1,6 +1,7 @@
 package bitc.aws402.miniproject.service;
 
 import bitc.aws402.miniproject.dto.QnaDTO;
+import bitc.aws402.miniproject.dto.ReplyDTO;
 import bitc.aws402.miniproject.mapper.QnaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class QnaService {
 
     public QnaDTO selectQnaDetail(int qnaIdx) {
         return qnaMapper.selectQnaDetail(qnaIdx);
+    }
+
+    public ReplyDTO selectQnaReply(int boardIdx){
+        return qnaMapper.selectQnaReply(boardIdx);
     }
 
     public void updateHitCount(int qnaIdx) {

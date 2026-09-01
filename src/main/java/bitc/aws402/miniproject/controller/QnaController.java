@@ -2,6 +2,7 @@ package bitc.aws402.miniproject.controller;
 
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
+import bitc.aws402.miniproject.dto.ReplyDTO;
 import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -69,7 +70,9 @@ public class QnaController {
         if (qna == null) {
             return "redirect:/qna/list";
         }
+        ReplyDTO reply = qnaService.selectQnaReply(id);
         model.addAttribute("qna", qna);
+        model.addAttribute("reply", reply);
         return "qna/qnaDetail";
     }
 

@@ -174,13 +174,13 @@
         <td colspan="5" class="text-center py-4 text-muted">등록된 문의가 없습니다.</td>
       </tr>
       <tr th:each="item : ${list}">
-        <td th:text="${item.id}">1</td>
+        <td th:text="${item.boardIdx}">1</td>
         <td>
-          <a class="title-link" th:href="@{/qna/detail(id=${item.id})}" th:text="${item.title}">제목</a>
+          <a class="title-link" th:href="@{/qna/detail(id=${item.boardIdx})}" th:text="${item.boardTitle}">제목</a>
         </td>
-        <td th:text="${item.writer}">작성자</td>
-        <td th:text="${item.createdAt}">2026-08-31</td>
-        <td th:text="${item.cnt}">0</td>
+        <td th:text="${item.memberName}">작성자</td>
+        <td th:text="${item.boardCreateDate}">2026-08-31</td>
+        <td th:text="${item.boardHitCnt}">0</td>
       </tr>
       </tbody>
     </table>

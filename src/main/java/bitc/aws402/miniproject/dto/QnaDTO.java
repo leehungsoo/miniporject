@@ -11,4 +11,5 @@ public class QnaDTO {
     private int boardCreateIdx;
     private String boardCreateDate;
     private int boardHitCnt;
+    private String memberName;
 }

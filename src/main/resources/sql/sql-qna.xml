@@ -5,14 +5,15 @@
 <mapper namespace="bitc.aws402.miniproject.mapper.QnaMapper">
     <select id="selectQnaList" resultType="QnaDTO">
         SELECT
-        id AS id,
-        title,
-        writer,
-        created_at AS createdAt,
-        cnt,
-        answer_status AS answerStatus
-        FROM qna
-        ORDER BY id DESC
+        board_idx,
+        board_title,
+        board_contents,
+        board_create_idx,
+        member_name,
+        board_create_date,
+        board_hit_cnt
+        FROM tb_board join tb_member on (board_create_idx = member_idx)
+        ORDER BY board_idx DESC
     </select>
 
     <!-- Q&A 글 등록 -->
@@ -24,25 +25,32 @@
     <!-- Q&A 상세 조회 -->
     <select id="selectQnaDetail" parameterType="int" resultType="QnaDTO">
         SELECT
-        id,
-        title,
-        writer,
-        content,
-        created_at AS createdAt,
-        answer,
-        answer_date AS answerDate,
-        answer_status AS answerStatus,
-        reply,
-        reply_created_at AS replyCreatedAt,
-        replied,
-        cnt
-        FROM qna
-        WHERE id = #{id}
+        board_idx,
+        board_title,
+        board_contents,
+        board_create_idx,
+        member_name,
+        board_create_date,
+        board_hit_cnt
+        FROM tb_board join tb_member on (board_create_idx = member_idx)
+        WHERE board_idx = #{id}
+    </select>
+
+    <select id="selectQnaReply" parameterType="int" resultType="ReplyDTO">
+        select
+        reply_idx,
+        reply_contents,
+        reply_board_idx,
+        reply_create_idx,
+        reply_create_date
+        from tb_reply join tb_member on (reply_create_idx=member_idx)
+        where reply_board_idx = #{boardIdx}
+        order by reply_idx desc limit 1
     </select>
 
     <!-- 조회수 증가 -->
     <update id="updateHitCount" parameterType="int">
-        UPDATE qna SET cnt = cnt + 1 WHERE id = #{qnaIdx}
+        UPDATE tb_board SET board_hit_cnt = board_hit_cnt + 1 WHERE board_idx = #{qnaIdx}
     </update>
 
     <!-- Q&A 수정 -->

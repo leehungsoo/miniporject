@@ -92,36 +92,36 @@
     <h2 class="title">Q&A 문의 상세 내용</h2>
 
     <div class="info-group">
-      <label>제목:</label> <span th:text="${qna.title}">제목이 표시됩니다.</span>
+      <label>제목:</label> <span th:text="${qna.boardTitle}">제목이 표시됩니다.</span>
     </div>
     <div class="info-group">
-      <label>작성자:</label> <span th:text="${qna.writer}">작성자명</span>
+      <label>작성자:</label> <span th:text="${qna.memberName}">작성자명</span>
     </div>
     <div class="info-group">
       <label>문의내용:</label>
-      <div class="content-box" th:text="${qna.content}">문의 내용이 표시됩니다.</div>
+      <div class="content-box" th:text="${qna.boardContents}">문의 내용이 표시됩니다.</div>
     </div>
 
     <!-- 관리자 답변 영역 -->
-    <div class="admin-reply-box" th:if="${(qna.answer != null and qna.answer != '') or (qna.reply != null and qna.reply != '')}">
+    <div class="admin-reply-box" th:if="${(reply.replyIdx != null and reply.replyIdx != '') or (reply.replyContents != null and reply.replyContents != '')}">
       <div class="admin-reply-title">
         <span>관리자 답변</span>
-        <span class="reply-date" th:text="${qna.answerDate != null ? qna.answerDate : (qna.replyCreatedAt != null ? #temporals.format(qna.replyCreatedAt, 'yyyy-MM-dd HH:mm') : '')}"></span>
+        <span class="reply-date" th:text="${reply.replyCreateDate != null ? reply.replyCreateDate : (reply.replyCreateDate != null ? #temporals.format(reply.replyCreateDate, 'yyyy-MM-dd HH:mm') : '')}"></span>
       </div>
-      <div class="content-box bg-white" th:text="${qna.answer != null and qna.answer != '' ? qna.answer : qna.reply}">관리자 답변 내용</div>
+      <div class="content-box bg-white" th:text="${reply.replyContents != null and reply.replyContents != '' ? reply.replyContents : ''}">관리자 답변 내용</div>
     </div>
 
     <!-- 미답변 안내 영역 -->
-    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${(qna.answer == null or qna.answer == '') and (qna.reply == null or qna.reply == '')}">
+    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${(reply.replyContents == null or reply.replyContents == '')}">
       <small>등록된 관리자 답변이 없습니다. 답변을 기다려주세요.</small>
     </div>
 
     <!-- 하단 버튼 영역 -->
     <div class="btn-group-custom">
       <!-- 수정 및 삭제 버튼 (작성자와 로그인한 사용자의 아이디가 같을 때만 노출) -->
-      <div th:if="${session.loginUser != null and session.loginUser.userId == qna.writer}" class="d-flex justify-content-end gap-2 mt-3">
-        <a th:href="@{/qna/edit(id=${qna.id})}" class="btn btn-outline-primary">수정하기</a>
-        <a th:href="@{/qna/delete(id=${qna.id})}" class="btn btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
+      <div th:if="${session.loginUser != null and session.loginUser.memberIdx == qna.boardIdx}" class="d-flex justify-content-end gap-2 mt-3">
+        <a th:href="@{/qna/edit(id=${qna.boardIdx})}" class="btn btn-outline-primary">수정하기</a>
+        <a th:href="@{/qna/delete(id=${qna.boardIdx})}" class="btn btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
       </div>
       <div>
         <a th:href="@{/qna/list}" class="btn-custom btn-primary-custom">목록으로</a>
