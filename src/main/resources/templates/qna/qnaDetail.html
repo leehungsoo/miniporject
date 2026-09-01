@@ -103,7 +103,7 @@
     </div>
 
     <!-- 관리자 답변 영역 -->
-    <div class="admin-reply-box" th:if="${(reply.replyIdx != null and reply.replyIdx != '') or (reply.replyContents != null and reply.replyContents != '')}">
+    <div class="admin-reply-box" th:if="${reply != null}">
       <div class="admin-reply-title">
         <span>관리자 답변</span>
         <span class="reply-date" th:text="${reply.replyCreateDate != null ? reply.replyCreateDate : (reply.replyCreateDate != null ? #temporals.format(reply.replyCreateDate, 'yyyy-MM-dd HH:mm') : '')}"></span>
@@ -112,7 +112,7 @@
     </div>
 
     <!-- 미답변 안내 영역 -->
-    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${(reply.replyContents == null or reply.replyContents == '')}">
+    <div class="alert alert-secondary mt-4 text-center py-3" role="alert" th:if="${reply == null}">
       <small>등록된 관리자 답변이 없습니다. 답변을 기다려주세요.</small>
     </div>
 
