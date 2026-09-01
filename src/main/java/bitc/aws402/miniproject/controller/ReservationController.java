@@ -99,7 +99,7 @@ public String reservationDetail(
                     + "&endDate=" + endDate
     );
 
-    return "redirect:/login";
+    return "redirect:/member/login";
   }
 
   RoomDTO room =
@@ -141,7 +141,7 @@ public String reservationDetail(
     MemberDTO member = getLoginMember(session);
 
     if (member == null) {
-      return "redirect:/login";
+      return "redirect:/member/login";
     }
 
     if (!isValidReservationDate(reservation.getRvStartDate(), reservation.getRvEndDate())) {
@@ -166,7 +166,7 @@ public String reservationDetail(
     MemberDTO member = getLoginMember(session);
 
     if (member == null) {
-      return "redirect:/login";
+      return "redirect:/member/login";
     }
 
     ReservationDTO reservation = reservationService.selectReservationComplete(rvCode);
