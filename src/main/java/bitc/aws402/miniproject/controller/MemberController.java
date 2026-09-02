@@ -23,7 +23,11 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String signupProcess(MemberDTO member, RedirectAttributes redirectAttributes){
+    public String signupProcess(MemberDTO member, RedirectAttributes redirectAttributes, Model model){
+        int checkId = memberService.checkIdExist(member.getMemberId());
+        if(checkId > 0){
+            return back("회원가입 실패 (이미 존재하는 아이디입니다.)", model);
+        }
         try {
             memberService.registerMember(member);
             redirectAttributes.addFlashAttribute("msg", "회원가입에 성공하였습니다.");
@@ -114,4 +118,11 @@ public class MemberController {
         redirectAttributes.addFlashAttribute("msg", "회원 정보가 수정되었습니다.");
         return "redirect:/";
     }
+
+    private String back(String msg, Model model){
+        model.addAttribute("msg", msg);
+        System.out.println(msg);
+        return "common/back";
+    }
+
 }

@@ -6,6 +6,12 @@
 <mapper namespace="bitc.aws402.miniproject.mapper.MemberMapper">
 
     <!-- 회원가입 -->
+    <select id="checkIdExist" parameterType="String" resultType="int">
+        select count(*) cnd
+        from tb_member
+        where member_id=#{memberId}
+    </select>
+
     <insert id="insertMember" parameterType="MemberDTO">
         INSERT INTO tb_member (
         member_id,

@@ -18,6 +18,11 @@ public class MemberService {
     private final MemberMapper memberMapper;
 
     // --- 회원 관련 ---
+    public int checkIdExist(String memberId) {
+        int checkResult = memberMapper.checkIdExist(memberId);
+        return checkResult;
+    }
+
     public void registerMember(MemberDTO member) throws Exception {
         memberMapper.insertMember(member);
     }
