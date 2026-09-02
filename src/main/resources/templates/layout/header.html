@@ -26,10 +26,15 @@
                     <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/qna/list}">고객센터</a></li>
                 </ul>
 
-                <!-- 우측 로그인/로그아웃 버튼 -->
-                <div class="d-flex">
-                    <a th:if="${session.memberId == null}" th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
-                    <a th:if="${session.memberId != null}" th:href="@{/member/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
+                <!-- [수정] 로그인 / 마이페이지 & 로그아웃 버튼 -->
+                <div class="d-flex align-items-center gap-2">
+                    <div th:if="${session.memberId == null}">
+                        <a th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
+                    </div>
+                    <div th:if="${session.memberId != null}" class="d-flex gap-2">
+                        <a th:href="@{/member/mypage}" class="btn btn-outline-success rounded-pill px-3 fw-semibold">마이페이지</a>
+                        <a th:href="@{/member/logout}" class="btn btn-success rounded-pill px-3 text-white fw-semibold">로그아웃</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,10 +66,15 @@
                     <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/qna/list}">고객센터</a></li>
                 </ul>
 
-                <!-- 우측 로그인/로그아웃 버튼 -->
-                <div class="d-flex">
-                    <a th:if="${session.memberId == null}" th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
-                    <a th:if="${session.memberId != null}" th:href="@{/member/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
+                <!-- [수정] 로그인 / 마이페이지 & 로그아웃 버튼 -->
+                <div class="d-flex align-items-center gap-2">
+                    <div th:if="${session.memberId == null}">
+                        <a th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
+                    </div>
+                    <div th:if="${session.memberId != null}" class="d-flex gap-2">
+                        <a th:href="@{/member/mypage}" class="btn btn-outline-success rounded-pill px-3 fw-semibold">마이페이지</a>
+                        <a th:href="@{/member/logout}" class="btn btn-success rounded-pill px-3 text-white fw-semibold">로그아웃</a>
+                    </div>
                 </div>
             </div>
         </div>
