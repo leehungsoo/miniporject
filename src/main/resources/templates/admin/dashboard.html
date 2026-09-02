@@ -243,7 +243,11 @@
                 <td th:text="${res?.checkIn}">2026-00-00</td>
                 <td th:text="${res?.checkOut}">2026-00-00</td>
                 <td th:text="${res?.resNo}">R-001</td>
-                <td><span class="badge bg-primary">Complete</span></td>
+                <td th:switch="${res.resStatus}">
+                  <span class="badge bg-danger" th:case="0">Cancel</span>
+                  <span class="badge bg-success" th:case="1">Reserved</span>
+                  <span class="badge bg-primary" th:case="2">Complete</span>
+                </td>
               </tr>
               <tr th:if="${reservationList == null or reservationList.isEmpty()}">
                 <td colspan="7" class="text-center py-5 text-muted">예약 내역이 존재하지 않습니다.</td>
