@@ -25,6 +25,11 @@ public class AdminService {
     return adminMapper.selectMemberList();
   }
 
+  // 회원 정보 수정 -- lhs
+  public int updateMember(MemberDTO member){
+    return adminMapper.updateMember(member);
+  }
+
   // 숙소 목록 조회
   public List<Map<String, Object>> selectAccommodationList() throws Exception {
     return adminMapper.selectAccommodationList();

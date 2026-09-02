@@ -9,11 +9,25 @@
         member_id AS memberId,
         member_pwd AS memberPwd,
         member_name AS memberName,
+        member_gender AS memberGender,
         member_email AS memberEmail,
         member_phone AS memberPhone,
-        member_level AS memberLevel
-        FROM tb_member
+        member_level AS memberLevel,
+        member_status AS memberStatus
+        FROM tb_member order by member_idx desc
     </select>
+
+    <update id="updateMember" parameterType="MemberDTO">
+        update tb_member set
+        member_name=#{memberName},
+        member_pwd=#{memberPwd},
+        member_email=#{memberEmail},
+        member_phone=#{memberPhone},
+        member_gender=#{memberGender},
+        member_level=#{memberLevel},
+        member_status=#{memberStatus}
+        where member_idx=#{memberIdx}
+    </update>
 
     <!-- 관리자 로그인용 회원 단건 조회 -->
     <select id="selectMemberById" parameterType="string" resultType="MemberDTO">

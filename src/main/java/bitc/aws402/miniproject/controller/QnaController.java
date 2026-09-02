@@ -4,6 +4,7 @@ import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
+import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,8 @@ public class QnaController {
 
     // Q&A 목록
     @GetMapping("/list")
-    public String selectQnaList(Model model) throws Exception {
-        List<QnaDTO> list = qnaService.selectQnaList();
+    public String selectQnaList(@RequestParam(required = false, defaultValue = "1", value = "pageNum") int pageNum, Model model) throws Exception {
+        PageInfo<QnaDTO> list = new PageInfo<>(qnaService.selectQnaListPaging(pageNum), 5);
         model.addAttribute("list", list);
         return "qna/qnaList";
     }

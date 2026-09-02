@@ -3,14 +3,18 @@ package bitc.aws402.miniproject.controller;
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.service.AdminService;
+import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +24,7 @@ import java.util.Map;
 @Controller
 public class AdminController {
     private final AdminService adminService;
+    private final MemberService memberService;
     private final QnaService qnaService;
 
     @GetMapping({"","/", "/index"})
@@ -52,6 +57,35 @@ public class AdminController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "로그인 처리 중 오류가 발생했습니다.");
             return "redirect:/admin/login";
+        }
+    }
+
+    @ResponseBody
+    @PutMapping("/memberUpdate")
+    public ResponseEntity<Integer> adminUpdateMember(@RequestBody MemberDTO member) {
+        if(member == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        int updateResult = adminService.updateMember(member);
+        return ResponseEntity.ok(updateResult);
+    }
+
+    @ResponseBody
+    @PostMapping("/memberInsert")
+    public ResponseEntity<String> adminInsertMember(@RequestBody MemberDTO member) {
+        if(member == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        int checkId = memberService.checkIdExist(member.getMemberId());
+        if(checkId > 0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원 추가 실패 (이미 존재하는 아이디입니다.)");
+        }
+        try {
+            memberService.registerMember(member);
+            return ResponseEntity.ok().body("회원 추가 성공");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원 추가 실패");
         }
     }
 

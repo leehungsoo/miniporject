@@ -17,6 +17,7 @@ public interface AdminMapper {
   // 회원 목록 조회
   List<MemberDTO> selectMemberList() throws Exception;
 
+  int updateMember(MemberDTO member);
   // 숙소 목록 조회
   List<Map<String, Object>> selectAccommodationList() throws Exception;
 

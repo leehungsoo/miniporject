@@ -10,6 +10,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
           crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.20.0/dist/axios.min.js"></script>
 
   <style>
       :root {
@@ -36,7 +38,7 @@
           background-color: #ffffff;
           border-radius: 12px;
           padding: 20px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       }
 
       .user-profile-box {
@@ -80,7 +82,7 @@
           background-color: #ffffff;
           border-radius: 12px;
           padding: 30px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
           min-height: 480px;
       }
 
@@ -93,6 +95,157 @@
           color: #888888;
       }
   </style>
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      const url = new URL(window.location.href);
+      const m = url.searchParams.get("m")
+      if(m != null){
+          switch (m){
+              case "1": document.querySelector("#menu1").click(); break;
+              case "2": document.querySelector("#menu2").click(); break;
+              case "3": document.querySelector("#menu3").click(); break;
+              case "4": document.querySelector("#menu4").click(); break;
+          }
+
+      }
+
+      const addMember = document.querySelector("#add-member");
+      addMember.addEventListener("click", function(){
+          const memberModal = new bootstrap.Modal(document.querySelector('#member-modal'));
+          const memberModalTitle = document.querySelector("#member-modal-title");
+          memberModalTitle.innerText = '회원 추가';
+          const memberModalIdx = document.querySelector("#member-modal-idx");
+          memberModalIdx.value = "";
+          const memberModalId = document.querySelector("#member-modal-id");
+          memberModalId.value = "";
+          memberModalId.disabled = false;
+          const memberModalPwd = document.querySelector("#member-modal-pwd");
+          memberModalPwd.value = "";
+          const memberModalName = document.querySelector("#member-modal-name");
+          memberModalName.value = "";
+          const memberModalPhone = document.querySelector("#member-modal-phone");
+          memberModalPhone.value = "";
+          const memberModalEmail = document.querySelector("#member-modal-email");
+          memberModalEmail.value = "";
+          const memberModalGender = document.querySelector("#member-modal-gender");
+          const genderSelect = memberModalGender.querySelectorAll('option');
+          genderSelect.forEach(function(option){
+              option.selected = false;
+          })
+          const memberModalLevel = document.querySelector("#member-modal-level");
+          const levelSelect = memberModalLevel.querySelectorAll('option');
+          levelSelect.forEach(function(option){
+              option.selected = false;
+          })
+          const memberModalStatus = document.querySelector("#member-modal-status");
+          const statusSelect = memberModalStatus.querySelectorAll('option');
+          statusSelect.forEach(function(option){
+              option.selected = false;
+          })
+          const memberModalEdit = document.querySelector("#member-modal-edit");
+          const memberModalAdd = document.querySelector("#member-modal-add");
+          memberModalEdit.classList.add('d-none');
+          memberModalAdd.classList.remove('d-none');
+          memberModal.show();
+
+          memberModalAdd.addEventListener('click', function(){
+              axios.post("/admin/memberInsert",
+                  {
+                      memberId:memberModalId.value,
+                      memberPwd:memberModalPwd.value,
+                      memberName:memberModalName.value,
+                      memberPhone:memberModalPhone.value,
+                      memberEmail:memberModalEmail.value,
+                      memberGender:memberModalGender.value,
+                      memberLevel:memberModalLevel.value,
+                      memberStatus:memberModalStatus.value,
+                  }
+              ).then(function (res) {
+                  const data = res.data;
+                  console.log(data);
+                  alert("추가완료");
+                  memberModal.hide();
+                  location.replace("/admin/dashboard?m=1");
+              }).catch(function (error) {
+                  alert("추가실패");
+                  console.log(error);
+              })
+          });
+      });
+    });
+
+    function showTab(tabId, element) {
+        const allTabs = document.querySelectorAll('.tab-content');
+        allTabs.forEach(tab => tab.classList.add('d-none'));
+
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.remove('d-none');
+        }
+
+        const allButtons = document.querySelectorAll('.menu-btn');
+        allButtons.forEach(btn => btn.classList.remove('active'));
+
+        element.classList.add('active');
+    }
+
+    function showMemberDetail(member) {
+
+        const memberModal = new bootstrap.Modal(document.querySelector('#member-modal'));
+        const memberModalTitle = document.querySelector("#member-modal-title");
+        memberModalTitle.innerText = '회원 정보 수정';
+        const memberModalIdx = document.querySelector("#member-modal-idx");
+        memberModalIdx.value = member.memberIdx;
+        const memberModalId = document.querySelector("#member-modal-id");
+        memberModalId.value = member.memberId;
+        memberModalId.disabled = true;
+        const memberModalPwd = document.querySelector("#member-modal-pwd");
+        memberModalPwd.value = member.memberPwd;
+        const memberModalName = document.querySelector("#member-modal-name");
+        memberModalName.value = member.memberName;
+        const memberModalPhone = document.querySelector("#member-modal-phone");
+        memberModalPhone.value = member.memberPhone;
+        const memberModalEmail = document.querySelector("#member-modal-email");
+        memberModalEmail.value = member.memberEmail;
+        const memberModalGender = document.querySelector("#member-modal-gender");
+        const genderSelect = memberModalGender.querySelector('option[value="' + member.memberGender + '"]');
+        genderSelect.selected = true;
+        const memberModalLevel = document.querySelector("#member-modal-level");
+        const levelSelect = memberModalLevel.querySelector('option[value="' + member.memberLevel + '"]');
+        levelSelect.selected = true;
+        const memberModalStatus = document.querySelector("#member-modal-status");
+        const statusSelect = memberModalStatus.querySelector('option[value="' + member.memberStatus + '"]');
+        statusSelect.selected = true;
+        const memberModalEdit = document.querySelector("#member-modal-edit");
+        const memberModalAdd = document.querySelector("#member-modal-add");
+        memberModalEdit.classList.remove('d-none');
+        memberModalAdd.classList.add('d-none');
+        memberModal.show();
+
+        memberModalEdit.addEventListener('click', function(){
+            axios.put("/admin/memberUpdate",
+                {
+                    memberIdx: memberModalIdx.value,
+                    memberId:memberModalId.value,
+                    memberPwd:memberModalPwd.value,
+                    memberName:memberModalName.value,
+                    memberPhone:memberModalPhone.value,
+                    memberEmail:memberModalEmail.value,
+                    memberGender:memberModalGender.value,
+                    memberLevel:memberModalLevel.value,
+                    memberStatus:memberModalStatus.value,
+                }
+            ).then(function (res) {
+                alert("변경완료");
+                memberModal.hide();
+                location.replace("/admin/dashboard?m=1");
+            }).catch(function (error) {
+                alert("변경실패");
+                console.log(error);
+            })
+        });
+    }
+  </script>
 </head>
 <body>
 <!-- 팀장님 헤더 디자인과 동일하게 맞춘 상단 네비게이션 바 -->
@@ -126,25 +279,26 @@
       <div class="sidebar">
         <div class="user-profile-box text-center">
           <i class="bi bi-person-circle fs-1 mb-2"></i>
-          <h5 class="mb-1" th:text="${session.adminUser != null ? session.adminUser.memberName + '님' : '관리자님'}">관리자님</h5>
+          <h5 class="mb-1" th:text="${session.adminUser != null ? session.adminUser.memberName + '님' : '관리자님'}">
+            관리자님</h5>
           <small class="opacity-75">환영합니다!</small>
         </div>
 
         <!-- 좌측 버튼 메뉴 -->
         <div class="nav-menu">
-          <button type="button" class="menu-btn" onclick="showTab('memberTab', this)">
+          <button type="button" class="menu-btn" id="menu1" onclick="showTab('memberTab', this)">
             <i class="bi bi-person me-2"></i> 회원 관리
           </button>
 
-          <button type="button" class="menu-btn" onclick="showTab('accTab', this)">
+          <button type="button" class="menu-btn" id="menu2" onclick="showTab('accTab', this)">
             <i class="bi bi-building me-2"></i> 회원 / 숙소 목록 조회
           </button>
 
-          <button type="button" class="menu-btn" onclick="showTab('resTab', this)">
+          <button type="button" class="menu-btn" id="menu3" onclick="showTab('resTab', this)">
             <i class="bi bi-calendar-check me-2"></i> 전체 예약 현황 조회
           </button>
 
-          <button type="button" class="menu-btn" onclick="showTab('qnaTab', this)">
+          <button type="button" class="menu-btn" id="menu4" onclick="showTab('qnaTab', this)">
             <i class="bi bi-chat-dots me-2"></i> Q&A 문의 관리
           </button>
         </div>
@@ -173,21 +327,39 @@
                 <th>이메일</th>
                 <th>연락처</th>
                 <th>권한</th>
+                <th>상태</th>
               </tr>
               </thead>
               <tbody>
-              <tr th:each="member : ${members}" th:if="${members != null and !members.isEmpty()}">
+              <tr th:each="member : ${members}" th:if="${members != null and !members.isEmpty()}"
+                  th:onclick="showMemberDetail([[${member}]])">
                 <td th:text="${member.memberId != null ? member.memberId : '-'}">user01</td>
                 <td th:text="${member.memberName != null ? member.memberName : '-'}">홍길동</td>
                 <td th:text="${member.memberEmail != null ? member.memberEmail : '-'}">user@example.com</td>
                 <td th:text="${member.memberPhone != null ? member.memberPhone : '-'}">010-0000-0000</td>
-                <td><span class="badge bg-secondary" th:text="${member.role != null ? member.role : 'USER'}">USER</span></td>
+                <td th:switch="${member.role}">
+                  <span class="badge bg-secondary" th:case="USER">USER</span>
+                  <span class="badge bg-primary" th:case="ADMIN">ADMIN</span>
+                </td>
+                <!--                <td>-->
+                <!--                  <select class="form-control">-->
+                <!--                    <option value="1" th:selected="${member.memberStatus == 1}">탈퇴</option>-->
+                <!--                    <option value="0" th:selected="${member.memberStatus == 0}">정상</option>-->
+                <!--                  </select>-->
+                <!--                </td>-->
+                <td th:switch="${member.memberStatus}">
+                  <span class="badge bg-success" th:case="1">정상</span>
+                  <span class="badge bg-secondary" th:case="0">탈퇴</span>
+                </td>
               </tr>
               <tr th:if="${members == null or #lists.isEmpty(members)}">
                 <td colspan="5" class="text-center py-5 text-muted">등록된 회원 정보가 없습니다.</td>
               </tr>
               </tbody>
             </table>
+            <div class="text-end mt-4">
+              <button type="button" class="btn btn-success" id="add-member">회원 추가</button>
+            </div>
           </div>
         </div>
 
@@ -209,7 +381,9 @@
                 <td th:text="${item?.accNo ?: '-'}">H-001</td>
                 <td th:text="${item?.accName ?: '-'}">제주 오션뷰</td>
                 <td th:text="${item?.accLocation ?: '-'}">제주도 서귀포시</td>
-                <td th:text="${item?.accPrice != null ? #numbers.formatInteger(item.accPrice, 0, 'COMMA') + '원' : '-'}">150,000원</td>
+                <td th:text="${item?.accPrice != null ? #numbers.formatInteger(item.accPrice, 0, 'COMMA') + '원' : '-'}">
+                  150,000원
+                </td>
               </tr>
               <tr th:if="${accommodations == null or accommodations.isEmpty()}">
                 <td colspan="5" class="text-center py-5 text-muted">등록된 숙소 정보가 없습니다.</td>
@@ -275,7 +449,8 @@
               <tr th:if="${qnaList != null and !qnaList.isEmpty()}" th:each="qna : ${qnaList}">
                 <td th:text="${qna.id}">1</td>
                 <td class="text-start">
-                  <a th:href="@{/admin/qna/{id}(id=${qna.id})}" th:text="${qna.title}" class="text-decoration-none text-dark fw-bold">제목</a>
+                  <a th:href="@{/admin/qna/{id}(id=${qna.id})}" th:text="${qna.title}"
+                     class="text-decoration-none text-dark fw-bold">제목</a>
                 </td>
                 <td th:text="${qna.memberId}">작성자</td>
                 <td th:text="${qna.createdAt != null ? qna.createdAt : '-'}">2026-09-01</td>
@@ -298,21 +473,67 @@
   </div>
 </div>
 
-<script>
-    function showTab(tabId, element) {
-        const allTabs = document.querySelectorAll('.tab-content');
-        allTabs.forEach(tab => tab.classList.add('d-none'));
-
-        const targetTab = document.getElementById(tabId);
-        if (targetTab) {
-            targetTab.classList.remove('d-none');
-        }
-
-        const allButtons = document.querySelectorAll('.menu-btn');
-        allButtons.forEach(btn => btn.classList.remove('active'));
-
-        element.classList.add('active');
-    }
-</script>
+<div class="modal fade" tabindex="-1" id="member-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="member-modal-title">회원 정보 수정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="member-form" method="post">
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" name="memberModalIdx" id="member-modal-idx">
+        <div class="modal-body">
+          <div class="form-floating">
+            <input type="text" id="member-modal-id" class="form-control" name="memberId">
+            <label for="member-modal-id" class="form-label">회원 ID</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" id="member-modal-pwd" class="form-control" name="memberPwd">
+            <label for="member-modal-pwd" class="form-label">비밀번호</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" id="member-modal-name" class="form-control" name="memberName">
+            <label for="member-modal-name" class="form-label">이름</label>
+          </div>
+          <div class="form-floating">
+            <select class="form-select" id="member-modal-gender" name="memberGender">
+              <option class="select-option" value="M">남성</option>
+              <option class="select-option" value="F">여성</option>
+            </select>
+            <label for="member-modal-gender" class="form-label">성별</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" id="member-modal-phone" class="form-control" name="memberPhone">
+            <label for="member-modal-phone" class="form-label">연락처</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" id="member-modal-email" class="form-control" name="memberEmail">
+            <label for="member-modal-email" class="form-label">이메일</label>
+          </div>
+          <div class="form-floating">
+            <select class="form-select" id="member-modal-level" name="memberGender">
+              <option class="select-option" value="0">User</option>
+              <option class="select-option" value="99">Admin</option>
+            </select>
+            <label for="member-modal-level" class="form-label">권한</label>
+          </div>
+          <div class="form-floating">
+            <select class="form-select" id="member-modal-status" name="memberStatus">
+              <option class="select-option" value="1">정상</option>
+              <option class="select-option" value="0">탈퇴</option>
+            </select>
+            <label for="member-modal-status" class="form-label">상태</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary d-none" id="member-modal-edit">수정</button>
+          <button type="button" class="btn btn-primary d-none" id="member-modal-add">추가</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 </body>
 </html>

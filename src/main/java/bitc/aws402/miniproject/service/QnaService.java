@@ -2,6 +2,7 @@ package bitc.aws402.miniproject.service;
 
 import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.mapper.QnaMapper;
+import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,11 @@ public class QnaService {
     private final QnaMapper qnaMapper;
 
     public List<QnaDTO> selectQnaList() throws Exception {
+        return qnaMapper.selectQnaList();
+    }
+
+    public List<QnaDTO> selectQnaListPaging(int pageNum) throws Exception {
+        PageHelper.startPage(pageNum,10);
         return qnaMapper.selectQnaList();
     }
 

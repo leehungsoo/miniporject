@@ -19,16 +19,14 @@
         member_name,
         member_gender,
         member_phone,
-        member_email,
-        member_level
+        member_email
         ) VALUES (
         #{memberId},
         #{memberPwd},
         #{memberName},
         #{memberGender},
         #{memberPhone},
-        #{memberEmail},
-        1              <!-- 기본 권한/레벨 설정 -->
+        #{memberEmail}
         )
     </insert>
 
