@@ -15,7 +15,7 @@ public interface AdminMapper {
   MemberDTO selectMemberById(@Param("memberId") String memberId) throws Exception;
 
   // 회원 목록 조회
-  List<MemberDTO> selectMemberList() throws Exception;
+  List<MemberDTO> selectMemberList();
 
   int updateMember(MemberDTO member);
   // 숙소 목록 조회

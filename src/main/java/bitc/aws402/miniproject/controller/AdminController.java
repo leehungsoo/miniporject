@@ -5,6 +5,7 @@ import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.service.AdminService;
 import bitc.aws402.miniproject.service.MemberService;
 import bitc.aws402.miniproject.service.QnaService;
+import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -89,18 +90,26 @@ public class AdminController {
         }
     }
 
+    @ResponseBody
+    @GetMapping("/memberSelect")
+    public ResponseEntity<String> adminSelectMember(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum) {
+        PageInfo<MemberDTO> list = new PageInfo<>(adminService.selectMemberListPage(pageNum), 5);
+        ResponseEntity resEntity = ResponseEntity.status(HttpStatus.OK).body(list);
+        return resEntity;
+    }
+
     //    mybatis 로 변경 필요
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         try {
             // AdminMapper에 정의된 메서드명과 일치시킴
-            List<MemberDTO> members = adminService.selectMemberList();
+//            List<MemberDTO> members = adminService.selectMemberList();
             List<Map<String, Object>> accommodations = adminService.selectAccommodationList();
             List<Map<String, Object>> reservationList = adminService.selectReservationList();
             List<QnaDTO> qnaList = qnaService.selectQnaList();
 
             // dashboard.html에서 사용하는 모델 변수명에 맞게 매핑
-            model.addAttribute("members", members);
+//            model.addAttribute("members", members);
             model.addAttribute("accommodations", accommodations);
             model.addAttribute("reservationList", reservationList);
             model.addAttribute("qnaList", qnaList);
@@ -108,7 +117,7 @@ public class AdminController {
         } catch (Exception e) {
             e.printStackTrace();
             // 오류 발생 시 뷰에서 에러가 나지 않도록 방어 코드 적용
-            model.addAttribute("members", new java.util.ArrayList<>());
+//            model.addAttribute("members", new java.util.ArrayList<>());
             model.addAttribute("accommodations", new java.util.ArrayList<>());
             model.addAttribute("reservationList", new java.util.ArrayList<>());
             model.addAttribute("qnaList", new java.util.ArrayList<>());

@@ -3,6 +3,7 @@ package bitc.aws402.miniproject.service;
 import bitc.aws402.miniproject.dto.MemberDTO;
 import bitc.aws402.miniproject.dto.QnaDTO;
 import bitc.aws402.miniproject.mapper.AdminMapper;
+import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class AdminService {
 
   // 회원 목록 조회
   public List<MemberDTO> selectMemberList() throws Exception {
+    return adminMapper.selectMemberList();
+  }
+
+  public List<MemberDTO> selectMemberListPage(int pageNum){
+    PageHelper.startPage(pageNum,10);
     return adminMapper.selectMemberList();
   }
 
