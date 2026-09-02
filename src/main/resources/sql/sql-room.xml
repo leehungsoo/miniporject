@@ -71,7 +71,7 @@
         WHERE room_idx = #{roomIdx}
     </delete>
 
-    <select id="selectResourceListByRoomIdx" parameterType="int" resultType="RestayDTO">
+    <select id="selectResourceList" parameterType="int" resultType="RestayDTO">
         SELECT
         resource_idx,
         resource_path,

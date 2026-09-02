@@ -24,4 +24,6 @@ public interface RestayMapper {
 
     // 5. 방 정보 삭제
     void deleteRoom(@Param("roomIdx") int roomIdx);
+
+    List<RestayDTO> selectResourceList(int roomIdx);
 }

@@ -20,4 +20,8 @@ public class DetailService {
     public RestayDTO selectRoomDetail(int roomIdx) {
         return restayMapper.selectRoomDetail(roomIdx);
     }
+    
+    public List<RestayDTO> selectResourceList(int roomIdx) {
+        return restayMapper.selectResourceList(roomIdx);
+    }
 }
