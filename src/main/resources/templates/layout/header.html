@@ -3,8 +3,8 @@
 <body>
 
 <!-- 1. 메인페이지 전용 헤더 -->
-<header th:fragment="mainHeader">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
+<header th:fragment="mainHeader" class="sticky-top bg-white shadow-sm" style="z-index: 1020;">
+    <nav class="navbar navbar-expand-lg navbar-light py-2">
         <div class="container">
             <!-- 로고 -->
             <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-success" th:href="@{/}">
@@ -26,12 +26,9 @@
                     <li class="nav-item"><a class="nav-link fw-semibold" th:href="@{/qna/list}">고객센터</a></li>
                 </ul>
 
-                <!-- 우측 로그인/로그아웃 버튼 (세션 정보에 따라 1개만 출력) -->
+                <!-- 우측 로그인/로그아웃 버튼 -->
                 <div class="d-flex">
-                    <!-- ① 비로그인 상태 (세션에 loginUser가 없음) -> 로그인 버튼만 출력 -->
                     <a th:if="${session.memberId == null}" th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
-
-                    <!-- ② 로그인 상태 (세션에 loginUser가 존재함) -> 로그아웃 버튼만 출력 -->
                     <a th:if="${session.memberId != null}" th:href="@{/member/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
                 </div>
             </div>
@@ -39,9 +36,10 @@
     </nav>
 </header>
 
-<!-- 2. 서브페이지 전용 헤더 (메뉴 + 서브배너) -->
-<header th:fragment="subHeader(bannerImg)">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
+<!-- 2. 서브페이지 전용 헤더 -->
+<th:block th:fragment="subHeader(bannerImg)">
+    <!-- 네비게이션 바를 fixed-top으로 화면 최상단에 절대 고정 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 fixed-top" style="z-index: 1030;">
         <div class="container">
             <!-- 로고 -->
             <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-success" th:href="@{/}">
@@ -65,21 +63,18 @@
 
                 <!-- 우측 로그인/로그아웃 버튼 -->
                 <div class="d-flex">
-                    <!-- ① 비로그인 상태 -->
                     <a th:if="${session.memberId == null}" th:href="@{/member/login}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">로그인</a>
-
-                    <!-- ② 로그인 상태 -->
                     <a th:if="${session.memberId != null}" th:href="@{/member/logout}" class="btn btn-success rounded-pill px-4 text-white fw-semibold">로그아웃</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- 서브 배너 이미지 -->
-    <div class="sub-banner">
+    <!-- fixed-top 사용 시 서브 배너가 메뉴 뒤로 파고드는 현상을 방지하기 위한 여백(margin-top) 지정 -->
+    <div class="sub-banner" style="margin-top: 65px;">
         <img th:src="@{|/images/${bannerImg}|}" alt="서브 배너" class="w-100 img-fluid object-fit-cover" style="max-height: 300px;">
     </div>
-</header>
+</th:block>
 
 </body>
 </html>
