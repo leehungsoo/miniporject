@@ -11,6 +11,7 @@ import java.util.List;
 //  추형호 -----
 @Mapper
 public interface MemberMapper {
+    int checkIdExist(@Param("memberId") String memberId);
     void insertMember(MemberDTO member) throws Exception;
     MemberDTO selectMemberByUserId(@Param("memberId") String memberId);
     List<MemberDTO> selectAllMembers() throws Exception;
