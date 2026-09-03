@@ -57,12 +57,13 @@
         m.member_id AS memberId,
         m.member_name AS resName,
         ro.room_name AS accName,
-        r.rv_start_date AS checkIn,
-        r.rv_end_date AS checkOut,
+        if(year(now())=year(r.rv_start_date), DATE_FORMAT(r.rv_start_date,'%m/%d'), DATE_FORMAT(r.rv_start_date,'%Y/%m/%d')) AS checkIn,
+        if(year(now())=year(r.rv_end_date), DATE_FORMAT(r.rv_end_date,'%m/%d'), DATE_FORMAT(r.rv_start_date,'%Y/%m/%d')) AS checkOut,
         r.rv_status AS resStatus
         FROM tb_reservation r
         JOIN tb_member m ON r.rv_member_idx = m.member_idx
         JOIN tb_room ro ON r.rv_room_idx = ro.room_idx
+        order by rv_idx desc
     </select>
 
     <!-- Q&A 문의 목록 조회 -->
