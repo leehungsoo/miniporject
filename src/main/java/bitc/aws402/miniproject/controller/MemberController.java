@@ -77,6 +77,19 @@ public class MemberController {
         session.setAttribute("memberStatus", member.getMemberStatus());
         session.setMaxInactiveInterval(60 * 30);  //세션 유지 시간 30분        redirectAttributes.addFlashAttribute("msg", "로그인 성공하였습니다");
 
+        // 예약페이지에서 로그인 페이지로 넘어온 경우 -- 구정민
+        String loginRedirectUrl =
+                (String) session.getAttribute("loginRedirectUrl");
+
+
+        if (loginRedirectUrl != null) {
+
+            session.removeAttribute("loginRedirectUrl");
+
+            return "redirect:" + loginRedirectUrl;
+        }
+
+
         if (redirectURL != null && !redirectURL.isEmpty()) {
             return "redirect:" + redirectURL;
         }
